@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>素材剧名配对台</title>
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#E9E5DC;
+    --surface:#FAF8F3;
+    --surface-2:#EFEBE2;
+    --ink:#201E19;
+    --ink-soft:#625D52;
+    --line:#D5CFC1;
+    --line-strong:#B9B1A0;
+    --accent:#BC4628;
+    --accent-dark:#9C371F;
+    --accent-ink:#FFFFFF;
+    --ok:#2E7D4F;
+    --mono: ui-monospace, "Cascadia Code", "SFMono-Regular", Consolas, Menlo, monospace;
+    --sans: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+    --serif: "Noto Serif SC", "Songti SC", "SimSun", serif;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    font-family:var(--sans);
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.6;
+    min-height:100vh;
+  }
+  /* ===== 场记板斜纹签名 ===== */
+  .clap-stripe{
+    height:10px;
+    background:repeating-linear-gradient(45deg, #221F1A 0 14px, #F1ECE1 14px 28px);
+    border-bottom:2px solid #221F1A;
+  }
+  .wrap{ max-width:1180px; margin:0 auto; padding:26px 24px 64px; }
+  header{ padding:30px 0 2px; }
+  header h1{
+    font-family:var(--serif);
+    font-weight:900;
+    font-size:34px;
+    line-height:1.2;
+    margin:0;
+    letter-spacing:0.5px;
+  }
+  header .kicker{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:13px; letter-spacing:3px; color:var(--accent);
+    font-weight:700;
+    margin-bottom:10px;
+  }
+  header .kicker svg{ width:16px; height:16px; }
+  header p.sub{
+    margin:8px 0 0; color:var(--ink-soft); font-size:15px; max-width:72ch;
+  }
+  /* ===== 规则说明 ===== */
+  .rules{
+    margin:20px 0 16px;
+    display:flex; flex-wrap:wrap; gap:10px;
+  }
+  .rule-chip{
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:7px 12px;
+    font-size:13px; color:var(--ink-soft);
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .rule-chip b{ color:var(--ink); font-weight:700; }
+  .rule-chip .dot{ width:8px; height:8px; border-radius:50%; background:var(--accent); flex:none; }
+  /* ===== 双栏 ===== */
+  .panes{
+    display:grid; grid-template-columns:1fr 1fr; gap:16px;
+  }
+  .pane{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:12px;
+    overflow:hidden;
+    display:flex; flex-direction:column;
+  }
+  .pane-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:11px 16px;
+    border-bottom:1px solid var(--line);
+    background:var(--surface-2);
+    gap:10px;
+  }
+  .pane-head h2{ margin:0; font-size:14px; font-weight:700; white-space:nowrap; }
+  .pane-head .count{ font-size:12px; color:var(--ink-soft); font-family:var(--mono); white-space:nowrap; }
+  .btn{
+    display:inline-flex; align-items:center; gap:6px;
+    min-height:30px; padding:0 12px;
+    border:none; border-radius:7px;
+    font-family:var(--sans); font-size:12.5px; font-weight:700;
+    cursor:pointer;
+    background:var(--accent); color:var(--accent-ink);
+    transition:background .15s ease, transform .05s ease;
+  }
+  .btn:hover{ background:var(--accent-dark); }
+  .btn:active{ transform:translateY(1px); }
+  .btn svg{ width:13px; height:13px; }
+  textarea{
+    width:100%;
+    border:none;
+    resize:vertical;
+    padding:14px 16px;
+    font-family:var(--mono);
+    font-size:13.5px;
+    line-height:1.75;
+    color:var(--ink);
+    background:#FFFDF9;
+  }
+  textarea:focus{ outline:none; }
+  #input{ min-height:540px; }
+  /* ===== 右侧双清单 ===== */
+  .out-blocks{ display:flex; flex-direction:column; gap:12px; padding:12px; }
+  .out-block{
+    border:1px solid var(--line);
+    border-radius:10px;
+    overflow:hidden;
+    background:#F6F2E8;
+    display:flex; flex-direction:column;
+  }
+  .out-block .block-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:8px 12px;
+    background:var(--surface-2);
+    border-bottom:1px solid var(--line);
+    gap:10px;
+  }
+  .out-block .block-head h3{ margin:0; font-size:13px; font-weight:700; white-space:nowrap; }
+  .out-block textarea{ min-height:150px; background:#F6F2E8; }
+  .badge{
+    display:inline-block; padding:1px 8px; border-radius:99px;
+    font-size:11.5px; font-weight:700; line-height:1.7; flex:none;
+  }
+  .badge.mat{ background:rgba(188,70,40,.12); color:var(--accent); }
+  .badge.dr{ background:rgba(46,125,79,.12); color:var(--ok); }
+  .badge.both{ background:rgba(98,93,82,.14); color:var(--ink-soft); }
+  /* ===== 解析明细 ===== */
+  .detail-pane{
+    margin-top:16px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:12px;
+    overflow:hidden;
+  }
+  .detail-body{ max-height:340px; overflow:auto; padding:6px 0; }
+  .detail-row{
+    display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;
+    padding:8px 16px;
+    font-size:13.5px;
+    border-bottom:1px dashed var(--line);
+  }
+  .detail-row:last-child{ border-bottom:none; }
+  .detail-row .idx{ color:var(--ink-soft); font-family:var(--mono); font-size:12px; flex:none; width:34px; text-align:right; }
+  .detail-row .mat-t{ font-weight:700; }
+  .detail-row .arrow{ color:var(--line-strong); flex:none; }
+  .detail-row .dr-t{ color:var(--ok); font-weight:700; }
+  .detail-row.same .mat-t, .detail-row.same .dr-t{ color:var(--ink-soft); font-weight:600; }
+  .empty-tip{ color:var(--ink-soft); }
+  /* ===== 底部统计 ===== */
+  .footer-stats{
+    margin-top:14px;
+    display:flex; flex-wrap:wrap; gap:14px 18px; align-items:center;
+    font-size:13px; color:var(--ink-soft);
+  }
+  .footer-stats .stat b{ color:var(--ink); font-family:var(--mono); }
+  .toast-msg{ color:var(--ok); font-weight:700; }
+  /* ===== 窄屏 ===== */
+  @media (max-width:860px){
+    .panes{ grid-template-columns:1fr; }
+    #input{ min-height:300px; }
+    header h1{ font-size:26px; }
+  }
+</style>
+
+<script src="_skin.js" data-tool="素材剧名配对台" data-kind="plain"></script>
+</head>
+<body>
+<div class="clap-stripe"></div>
+<div class="wrap">
+  <header>
+    <div class="kicker">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8l16-3v6l-16 3z"/><path d="M4 14l16-3v6l-16 3z"/><line x1="4" y1="8" x2="4" y2="14"/><line x1="20" y1="5" x2="20" y2="11"/></svg>
+      素材整理
+    </div>
+    <h1>素材剧名配对台</h1>
+    <p class="sub">把整段素材名与剧名粘进来：<b>两行连续</b>为「上行素材名、下行剧名」，<b>单独一行</b>则素材名与剧名相同；下方自动给出可复制的剧名清单与素材名清单。</p>
+  </header>
+
+  <div class="rules" aria-label="处理规则">
+    <span class="rule-chip"><span class="dot"></span><b>两行连续</b>上素材名 / 下剧名</span>
+    <span class="rule-chip"><span class="dot"></span><b>单独一行</b>素材名＝剧名</span>
+    <span class="rule-chip"><span class="dot"></span><b>空行分段</b>无空行则按行两两配对</span>
+    <span class="rule-chip"><span class="dot"></span><b>结果可编辑</b>输出框可直接修改</span>
+  </div>
+
+  <section class="panes">
+    <div class="pane">
+      <div class="pane-head"><h2>原始粘贴</h2><span class="count" id="inCount">0 行</span></div>
+      <textarea id="input" aria-label="素材名与剧名列表" placeholder="每对两行（上素材名、下剧名），或单独一行（素材名=剧名），空行分段……"></textarea>
+    </div>
+    <div class="pane">
+      <div class="pane-head"><h2>分离结果</h2><span class="count" id="outCount">0 条</span></div>
+      <div class="out-blocks">
+        <div class="out-block">
+          <div class="block-head">
+            <h3><span class="badge dr">剧名</span></h3>
+            <button class="btn" type="button" data-copy="dramaOut">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+              <span>复制剧名</span>
+            </button>
+          </div>
+          <textarea id="dramaOut" aria-label="剧名清单" spellcheck="false"></textarea>
+        </div>
+        <div class="out-block">
+          <div class="block-head">
+            <h3><span class="badge mat">素材名</span></h3>
+            <button class="btn" type="button" data-copy="matOut">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+              <span>复制素材名</span>
+            </button>
+          </div>
+          <textarea id="matOut" aria-label="素材名清单" spellcheck="false"></textarea>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="detail-pane">
+    <div class="pane-head"><h2>解析明细</h2><span class="count">核对配对是否正确</span></div>
+    <div class="detail-body" id="detail"></div>
+  </section>
+
+  <div class="footer-stats">
+    <span class="stat">输入 <b id="statIn">0</b> 行</span>
+    <span class="stat">配对 <b id="statPair">0</b> 条</span>
+    <span class="stat">同名 <b id="statSame">0</b> 条</span>
+    <span class="stat">剧名 <b id="statDrama">0</b> 条</span>
+    <span class="stat">素材名 <b id="statMat">0</b> 条</span>
+    <span class="toast-msg" id="toast" role="status" aria-live="polite"></span>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var inputEl = document.getElementById('input');
+  var dramaOut = document.getElementById('dramaOut');
+  var matOut = document.getElementById('matOut');
+  var detailEl = document.getElementById('detail');
+  var toastEl = document.getElementById('toast');
+  var inCountEl = document.getElementById('inCount');
+  var outCountEl = document.getElementById('outCount');
+  var statIn = document.getElementById('statIn');
+  var statPair = document.getElementById('statPair');
+  var statSame = document.getElementById('statSame');
+  var statDrama = document.getElementById('statDrama');
+  var statMat = document.getElementById('statMat');
+
+  function parse(text){
+    var norm = text.replace(/\r\n?/g, '\n');
+    var groups = norm.split(/\n\s*\n/);
+    var items = [];
+    for (var g = 0; g < groups.length; g++){
+      var lines = groups[g].split('\n').map(function(s){ return s.trim(); }).filter(Boolean);
+      if (!lines.length) continue;
+      if (lines.length === 1){
+        items.push({ mat: lines[0], drama: lines[0], same: true });
+      } else {
+        for (var i = 0; i < lines.length; i += 2){
+          if (i + 1 < lines.length){
+            items.push({ mat: lines[i], drama: lines[i + 1], same: false });
+          } else {
+            items.push({ mat: lines[i], drama: lines[i], same: true });
+          }
+        }
+      }
+    }
+    return items;
+  }
+
+  function process(){
+    var items = parse(inputEl.value);
+    var same = 0;
+    for (var i = 0; i < items.length; i++){ if (items[i].same) same++; }
+    var dramas = [], mats = [];
+    for (var j = 0; j < items.length; j++){
+      dramas.push(items[j].drama);
+      mats.push(items[j].mat);
+    }
+    dramaOut.value = dramas.join('\n');
+    matOut.value = mats.join('\n');
+
+    detailEl.innerHTML = '';
+    if (!items.length){
+      var empty = document.createElement('div');
+      empty.className = 'detail-row';
+      empty.innerHTML = '<span class="idx"></span><span class="empty-tip">暂无内容，请在上方粘贴素材名与剧名</span>';
+      detailEl.appendChild(empty);
+    } else {
+      for (var k = 0; k < items.length; k++){
+        var it = items[k];
+        var row = document.createElement('div');
+        row.className = 'detail-row' + (it.same ? ' same' : '');
+        var idx = document.createElement('span');
+        idx.className = 'idx';
+        idx.textContent = (k + 1);
+        row.appendChild(idx);
+        if (it.same){
+          var b = document.createElement('span');
+          b.className = 'badge both';
+          b.textContent = '同名';
+          var mt = document.createElement('span');
+          mt.className = 'mat-t';
+          mt.textContent = it.mat;
+          row.appendChild(b);
+          row.appendChild(mt);
+        } else {
+          var b1 = document.createElement('span');
+          b1.className = 'badge mat';
+          b1.textContent = '素材名';
+          var mt2 = document.createElement('span');
+          mt2.className = 'mat-t';
+          mt2.textContent = it.mat;
+          var ar = document.createElement('span');
+          ar.className = 'arrow';
+          ar.textContent = '→';
+          var b2 = document.createElement('span');
+          b2.className = 'badge dr';
+          b2.textContent = '剧名';
+          var dt = document.createElement('span');
+          dt.className = 'dr-t';
+          dt.textContent = it.drama;
+          row.appendChild(b1);
+          row.appendChild(mt2);
+          row.appendChild(ar);
+          row.appendChild(b2);
+          row.appendChild(dt);
+        }
+        detailEl.appendChild(row);
+      }
+    }
+
+    var lineCount = inputEl.value.split(/\r?\n/).map(function(s){ return s.trim(); }).filter(Boolean).length;
+    inCountEl.textContent = lineCount + ' 行';
+    outCountEl.textContent = items.length + ' 条';
+    statIn.textContent = lineCount;
+    statPair.textContent = items.length - same;
+    statSame.textContent = same;
+    statDrama.textContent = items.length;
+    statMat.textContent = items.length;
+  }
+
+  inputEl.addEventListener('input', process);
+
+  var copyTimer = null;
+  var copyBtns = document.querySelectorAll('button[data-copy]');
+  for (var c = 0; c < copyBtns.length; c++){
+    (function(btn){
+      btn.addEventListener('click', function(){
+        var target = document.getElementById(btn.getAttribute('data-copy'));
+        var label = btn.querySelector('span');
+        var val = target.value;
+        if (!val){
+          toastEl.textContent = '没有可复制的内容';
+          return;
+        }
+        function done(){
+          label.textContent = '已复制';
+          toastEl.textContent = '已复制到剪贴板';
+          if (copyTimer) clearTimeout(copyTimer);
+          copyTimer = setTimeout(function(){
+            label.textContent = btn.getAttribute('data-copy') === 'dramaOut' ? '复制剧名' : '复制素材名';
+            toastEl.textContent = '';
+          }, 1800);
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText){
+          navigator.clipboard.writeText(val).then(done, function(){ fallbackCopy(val); done(); });
+        } else {
+          fallbackCopy(val); done();
+        }
+      });
+    })(copyBtns[c]);
+  }
+
+  function fallbackCopy(text){
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); } catch(e){}
+    document.body.removeChild(ta);
+  }
+
+  // 预填示例，打开即可看到效果
+  inputEl.value = [
+    '八十桌升学宴，我不买单',
+    '理清家事，共赴新程',
+    '',
+    '当妈妈开始较真的时候',
+    '女律师秉公维权',
+    '',
+    '烫嘴的免费午饭',
+    '',
+    '念念不忘的暖光',
+    '青春旧忆里的暖光'
+  ].join('\n');
+  process();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>空行分隔工具</title>
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#E9E5DC;
+    --surface:#FAF8F3;
+    --surface-2:#EFEBE2;
+    --ink:#201E19;
+    --ink-soft:#625D52;
+    --line:#D5CFC1;
+    --line-strong:#B9B1A0;
+    --accent:#BC4628;
+    --accent-dark:#9C371F;
+    --accent-ink:#FFFFFF;
+    --ok:#2E7D4F;
+    --mono: ui-monospace, "Cascadia Code", "SFMono-Regular", Consolas, Menlo, monospace;
+    --sans: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+    --serif: "Noto Serif SC", "Songti SC", "SimSun", serif;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    font-family:var(--sans);
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.6;
+    min-height:100vh;
+  }
+  .clap-stripe{
+    height:10px;
+    background:repeating-linear-gradient(45deg, #221F1A 0 14px, #F1ECE1 14px 28px);
+    border-bottom:2px solid #221F1A;
+  }
+  .wrap{ max-width:1180px; margin:0 auto; padding:26px 24px 64px; }
+  header{ padding:30px 0 2px; }
+  header h1{
+    font-family:var(--serif);
+    font-weight:900;
+    font-size:34px;
+    line-height:1.2;
+    margin:0;
+    letter-spacing:0.5px;
+  }
+  header .kicker{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:13px; letter-spacing:3px; color:var(--accent);
+    font-weight:700;
+    margin-bottom:10px;
+  }
+  header .kicker svg{ width:16px; height:16px; }
+  header p.sub{
+    margin:8px 0 0; color:var(--ink-soft); font-size:15px; max-width:72ch;
+  }
+  .rules{
+    margin:20px 0 16px;
+    display:flex; flex-wrap:wrap; gap:10px;
+  }
+  .rule-chip{
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:7px 12px;
+    font-size:13px; color:var(--ink-soft);
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .rule-chip b{ color:var(--ink); font-weight:700; }
+  .rule-chip .dot{ width:8px; height:8px; border-radius:50%; background:var(--accent); flex:none; }
+  .panes{
+    display:grid; grid-template-columns:1fr 1fr; gap:16px;
+  }
+  .pane{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:12px;
+    overflow:hidden;
+    display:flex; flex-direction:column;
+  }
+  .pane-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:11px 16px;
+    border-bottom:1px solid var(--line);
+    background:var(--surface-2);
+    gap:10px;
+  }
+  .pane-head h2{ margin:0; font-size:14px; font-weight:700; white-space:nowrap; }
+  .pane-head .count{ font-size:12px; color:var(--ink-soft); font-family:var(--mono); white-space:nowrap; }
+  .btn{
+    display:inline-flex; align-items:center; gap:6px;
+    min-height:30px; padding:0 12px;
+    border:none; border-radius:7px;
+    font-family:var(--sans); font-size:12.5px; font-weight:700;
+    cursor:pointer;
+    background:var(--accent); color:var(--accent-ink);
+    transition:background .15s ease, transform .05s ease;
+  }
+  .btn:hover{ background:var(--accent-dark); }
+  .btn:active{ transform:translateY(1px); }
+  .btn svg{ width:13px; height:13px; }
+  textarea{
+    width:100%;
+    border:none;
+    resize:vertical;
+    padding:14px 16px;
+    font-family:var(--mono);
+    font-size:13.5px;
+    line-height:1.75;
+    color:var(--ink);
+    background:#FFFDF9;
+  }
+  textarea:focus{ outline:none; }
+  #input{ min-height:540px; }
+  #output{ background:#F6F2E8; min-height:540px; }
+  .footer-stats{
+    margin-top:14px;
+    display:flex; flex-wrap:wrap; gap:14px 18px; align-items:center;
+    font-size:13px; color:var(--ink-soft);
+  }
+  .footer-stats .stat b{ color:var(--ink); font-family:var(--mono); }
+  .toast-msg{ color:var(--ok); font-weight:700; }
+  @media (max-width:860px){
+    .panes{ grid-template-columns:1fr; }
+    #input, #output{ min-height:300px; }
+    header h1{ font-size:26px; }
+  }
+</style>
+
+<script src="_skin.js" data-tool="空行分隔工具" data-kind="plain"></script>
+</head>
+<body>
+<div class="clap-stripe"></div>
+<div class="wrap">
+  <header>
+    <div class="kicker">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8l16-3v6l-16 3z"/><path d="M4 14l16-3v6l-16 3z"/><line x1="4" y1="8" x2="4" y2="14"/><line x1="20" y1="5" x2="20" y2="11"/></svg>
+      格式整理
+    </div>
+    <h1>空行分隔工具</h1>
+    <p class="sub">把多行文本变成<b>每行之间空一行</b>：粘贴进来即实时转换，一键复制。</p>
+  </header>
+
+  <div class="rules" aria-label="处理规则">
+    <span class="rule-chip"><span class="dot"></span><b>忽略空行</b>输入里的空行自动跳过</span>
+    <span class="rule-chip"><span class="dot"></span><b>行间空一行</b>末尾不加多余空行</span>
+    <span class="rule-chip"><span class="dot"></span><b>实时转换</b>粘贴即出结果</span>
+    <span class="rule-chip"><span class="dot"></span><b>结果可编辑</b>输出框可直接修改</span>
+  </div>
+
+  <section class="panes">
+    <div class="pane">
+      <div class="pane-head"><h2>原始输入</h2><span class="count" id="inCount">0 行</span></div>
+      <textarea id="input" aria-label="原始输入" placeholder="每行一个，粘贴整段……"></textarea>
+    </div>
+    <div class="pane">
+      <div class="pane-head">
+        <h2>空行分隔结果</h2>
+        <span class="count" id="outCount">0 行</span>
+        <button class="btn" id="copyBtn" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+          <span id="copyLabel">复制结果</span>
+        </button>
+      </div>
+      <textarea id="output" aria-label="空行分隔结果" spellcheck="false"></textarea>
+    </div>
+  </section>
+
+  <div class="footer-stats">
+    <span class="stat">输入 <b id="statIn">0</b> 行</span>
+    <span class="stat">输出 <b id="statOut">0</b> 行</span>
+    <span class="toast-msg" id="toast" role="status" aria-live="polite"></span>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var inputEl = document.getElementById('input');
+  var outputEl = document.getElementById('output');
+  var copyBtn = document.getElementById('copyBtn');
+  var copyLabel = document.getElementById('copyLabel');
+  var toastEl = document.getElementById('toast');
+  var inCountEl = document.getElementById('inCount');
+  var outCountEl = document.getElementById('outCount');
+  var statIn = document.getElementById('statIn');
+  var statOut = document.getElementById('statOut');
+
+  function process(){
+    var raw = inputEl.value;
+    var lines = raw.split(/\r?\n/).map(function(s){ return s.trim(); }).filter(Boolean);
+    outputEl.value = lines.join('\n\n');
+    inCountEl.textContent = lines.length + ' 行';
+    outCountEl.textContent = lines.length + ' 行';
+    statIn.textContent = lines.length;
+    statOut.textContent = lines.length;
+  }
+
+  inputEl.addEventListener('input', process);
+
+  var copyTimer = null;
+  copyBtn.addEventListener('click', function(){
+    var val = outputEl.value;
+    if (!val){
+      toastEl.textContent = '没有可复制的内容';
+      return;
+    }
+    function done(){
+      copyLabel.textContent = '已复制';
+      toastEl.textContent = '结果已复制到剪贴板';
+      if (copyTimer) clearTimeout(copyTimer);
+      copyTimer = setTimeout(function(){
+        copyLabel.textContent = '复制结果';
+        toastEl.textContent = '';
+      }, 1800);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(val).then(done, function(){ fallbackCopy(val); done(); });
+    } else {
+      fallbackCopy(val); done();
+    }
+  });
+
+  function fallbackCopy(text){
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); } catch(e){}
+    document.body.removeChild(ta);
+  }
+
+  // 预填示例
+  inputEl.value = [
+    '我终于不忍了',
+    '潮起海棠香',
+    '一碗红尘之杜坤',
+    '黑白诡妻',
+    '从乞丐到太子只需要一花瓶',
+    '车厢里的故事',
+    '我靠绝世金瞳登顶古玩圈',
+    '一纸微光赴君归',
+    '井里赶海：我靠井底龙宫赶海养家',
+    '床底下的人',
+    '藏富见人心',
+    '重回82：我成山君契约万兽打猎宠妻',
+    '诚果无价',
+    '一千八不打折',
+    '月照陆归时',
+    '八零辣妻，原来是个林妹妹',
+    '董事长的继承人',
+    '这婚我不结了，换人',
+    '风雪中的守汤人'
+  ].join('\n');
+  process();
+})();
+</script>
+</body>
+</html>

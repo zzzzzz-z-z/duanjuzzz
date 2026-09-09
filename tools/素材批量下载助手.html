@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>素材批量下载助手 · 书签安装页 v4</title>
+<style>
+  body{font-family:"Microsoft YaHei",Arial,sans-serif;background:#f4f6f9;margin:0;padding:24px;color:#333;line-height:1.7;}
+  .wrap{max-width:900px;margin:0 auto;}
+  h1{font-size:22px;}
+  h2{font-size:16px;border-left:4px solid #2f6bff;padding-left:8px;margin-top:26px;}
+  .card{background:#fff;border:1px solid #e2e6ec;border-radius:10px;padding:16px 20px;margin-top:14px;box-shadow:0 2px 8px rgba(0,0,0,.04);}
+  .bmk{display:inline-block;padding:12px 28px;background:#2f6bff;color:#fff!important;text-decoration:none;border-radius:8px;font-weight:bold;font-size:16px;cursor:grab;}
+  .bmk:hover{background:#1d56e0;}
+  .btn{display:inline-block;padding:9px 18px;background:#fff;color:#2f6bff;border:1px solid #2f6bff;border-radius:6px;cursor:pointer;font-size:14px;}
+  .btn:hover{background:#eef3ff;}
+  code{background:#f0f2f5;padding:1px 6px;border-radius:4px;font-family:Consolas,monospace;}
+  .warn{background:#fff7e6;border:1px solid #ffd591;border-radius:8px;padding:10px 14px;color:#8a4b00;margin-top:10px;}
+  .ok{background:#f0f9eb;border:1px solid #b7eb8f;border-radius:8px;padding:10px 14px;color:#1d6b00;margin-top:10px;}
+  ol{padding-left:22px;}
+  pre{background:#1e1e1e;color:#d4d4d4;border-radius:8px;padding:14px;overflow:auto;max-height:480px;font-size:12px;font-family:Consolas,monospace;}
+  table{border-collapse:collapse;width:100%;margin-top:8px;}
+  th,td{border:1px solid #e2e6ec;padding:6px 10px;text-align:left;font-size:14px;}
+  th{background:#f7f9fc;}
+  .g{color:#0a8f2b;font-weight:bold;}
+  .r{color:#d93025;font-weight:bold;}
+</style>
+
+<script src="_skin.js" data-tool="素材批量下载助手" data-kind="bookmark"></script>
+</head>
+<body>
+<div class="wrap">
+  <h1>创量「素材筛选」页 · 批量下载助手 书签 v4</h1>
+  <div class="card">
+    <h2 style="margin-top:0;">安装（任选一种）</h2>
+    <p><b>方式一（推荐）：</b>把下面蓝色按钮 <b>拖到浏览器书签栏</b>（需先打开书签栏：Ctrl+Shift+B）。</p>
+    <p><a class="bmk" id="bmk" href="javascript:(()%20%3D%3E%20%7B%0A%27use%20strict%27%3B%0A%2F*%20%3D%3D%3D%3D%3D%20%E5%BE%AA%E7%8E%AF%E8%AE%A1%E6%97%B6%E5%99%A8%EF%BC%88%E5%8F%B3%E4%B8%8B%E8%A7%92%20%C2%B7%20%E5%8F%AF%E6%8B%96%E5%8A%A8%20%C2%B7%20%E9%87%8D%E8%B7%91%E8%87%AA%E5%8A%A8%E9%87%8D%E7%BD%AE%EF%BC%89%20%3D%3D%3D%3D%3D%20*%2F%0Awindow.TT%20%3D%20(function%20()%20%7B%0Avar%20old%20%3D%20document.getElementById(%27tt-panel%27)%3B%0Aif%20(old)%20old.parentNode.removeChild(old)%3B%0Avar%20p%20%3D%20document.createElement(%27div%27)%3B%0Ap.id%20%3D%20%27tt-panel%27%3B%0Ap.style.cssText%20%3D%20%27position%3Afixed%3Bright%3A14px%3Bbottom%3A14px%3Bz-index%3A2147483000%3Bwidth%3A270px%3Bmax-height%3A46vh%3Bbackground%3A%230f172a%3Bborder%3A1px%20solid%20%23334155%3Bborder-radius%3A10px%3Bcolor%3A%23e2e8f0%3Bfont%3A12px%2F1.6%20%22Microsoft%20YaHei%22%2Csans-serif%3Bbox-shadow%3A0%2010px%2030px%20rgba(0%2C0%2C0%2C.5)%3Bdisplay%3Aflex%3Bflex-direction%3Acolumn%3Boverflow%3Ahidden%3B%27%3B%0Ap.innerHTML%20%3D%20%27%3Cdiv%20style%3D%22display%3Aflex%3Balign-items%3Acenter%3Bpadding%3A6px%2010px%3Bbackground%3A%231e293b%3Bcolor%3A%234ade80%3Bfont-weight%3Abold%3Bcursor%3Amove%3Buser-select%3Anone%3Bborder-bottom%3A1px%20solid%20%23334155%3B%22%3E%3Cspan%20style%3D%22flex%3A1%3B%22%3E%E5%BE%AA%E7%8E%AF%E8%AE%A1%E6%97%B6%20%3Cspan%20id%3D%22tt-run%22%20style%3D%22color%3A%2394a3b8%3Bfont-weight%3A400%3Bfont-size%3A11px%3B%22%3E%3C%2Fspan%3E%3C%2Fspan%3E%3Cspan%20id%3D%22tt-close%22%20title%3D%22%E5%85%B3%E9%97%AD%22%20style%3D%22cursor%3Apointer%3Bcolor%3A%2394a3b8%3Bpadding%3A0%202px%3B%22%3E%C3%97%3C%2Fspan%3E%3C%2Fdiv%3E%3Cdiv%20id%3D%22tt-list%22%20style%3D%22overflow-y%3Aauto%3Bpadding%3A6px%208px%3Bmax-height%3A38vh%3B%22%3E%3C%2Fdiv%3E%3Cdiv%20style%3D%22padding%3A4px%2010px%3Bborder-top%3A1px%20solid%20%23334155%3Bcolor%3A%2394a3b8%3Bfont-size%3A11px%3B%22%3E%E5%AE%8C%E6%88%90%20%3Cspan%20id%3D%22tt-done%22%3E0%3C%2Fspan%3E%20%E6%AC%A1%20%C2%B7%20%E6%80%BB%E8%80%97%E6%97%B6%20%3Cspan%20id%3D%22tt-total%22%3E0ms%3C%2Fspan%3E%3C%2Fdiv%3E%27%3B%0Adocument.body.appendChild(p)%3B%0Avar%20list%20%3D%20p.querySelector(%27%23tt-list%27)%2C%20doneEl%20%3D%20p.querySelector(%27%23tt-done%27)%2C%20totalEl%20%3D%20p.querySelector(%27%23tt-total%27)%2C%20runEl%20%3D%20p.querySelector(%27%23tt-run%27)%3B%0Avar%20head%20%3D%20p.querySelector(%27div%27)%2C%20dragging%20%3D%20false%2C%20ox%20%3D%200%2C%20oy%20%3D%200%3B%0Ahead.addEventListener(%27mousedown%27%2C%20function%20(e)%20%7B%20if%20(e.target%20%26%26%20e.target.id%20%3D%3D%3D%20%27tt-close%27)%20return%3B%20dragging%20%3D%20true%3B%20ox%20%3D%20e.clientX%20-%20p.offsetLeft%3B%20oy%20%3D%20e.clientY%20-%20p.offsetTop%3B%20e.preventDefault()%3B%20%7D)%3B%0Adocument.addEventListener(%27mousemove%27%2C%20function%20(e)%20%7B%20if%20(!dragging)%20return%3B%20p.style.left%20%3D%20(e.clientX%20-%20ox)%20%2B%20%27px%27%3B%20p.style.top%20%3D%20(e.clientY%20-%20oy)%20%2B%20%27px%27%3B%20p.style.right%20%3D%20%27auto%27%3B%20p.style.bottom%20%3D%20%27auto%27%3B%20%7D)%3B%0Adocument.addEventListener(%27mouseup%27%2C%20function%20()%20%7B%20dragging%20%3D%20false%3B%20%7D)%3B%0Ap.querySelector(%27%23tt-close%27).onclick%20%3D%20function%20()%20%7B%20p.style.display%20%3D%20%27none%27%3B%20%7D%3B%0Afunction%20esc(s)%20%7B%20return%20String(s%20%3D%3D%20null%20%3F%20%27%27%20%3A%20s).replace(%2F%26%2Fg%2C%20%27%26amp%3B%27).replace(%2F%3C%2Fg%2C%20%27%26lt%3B%27).replace(%2F%3E%2Fg%2C%20%27%26gt%3B%27)%3B%20%7D%0Afunction%20fmt(ms)%20%7B%20if%20(ms%20%3C%201000)%20return%20ms%20%2B%20%27ms%27%3B%20var%20s%20%3D%20ms%20%2F%201000%3B%20if%20(s%20%3C%2060)%20return%20s.toFixed(1)%20%2B%20%27s%27%3B%20return%20Math.floor(s%20%2F%2060)%20%2B%20%27m%27%20%2B%20Math.round(s%20%25%2060)%20%2B%20%27s%27%3B%20%7D%0Avar%20n%20%3D%200%2C%20done%20%3D%200%2C%20totalMs%20%3D%200%2C%20cur%20%3D%20null%3B%0Afunction%20addRow(name%2C%20ok%2C%20ms)%20%7B%0Avar%20r%20%3D%20document.createElement(%27div%27)%3B%0Ar.style.cssText%20%3D%20%27display%3Aflex%3Bgap%3A6px%3Balign-items%3Abaseline%3Bpadding%3A2px%200%3Bborder-bottom%3A1px%20dashed%20%231e293b%3B%27%3B%0Ar.innerHTML%20%3D%20%27%3Cspan%20style%3D%22color%3A%2364748b%3Bflex%3Anone%3B%22%3E%27%20%2B%20n%20%2B%20%27.%3C%2Fspan%3E%3Cspan%20style%3D%22color%3A%27%20%2B%20(ok%20%3F%20%27%234ade80%27%20%3A%20%27%23f87171%27)%20%2B%20%27%3Bflex%3Anone%3B%22%3E%27%20%2B%20(ok%20%3F%20%27%E2%88%9A%27%20%3A%20%27%C3%97%27)%20%2B%20%27%3C%2Fspan%3E%3Cspan%20style%3D%22flex%3A1%3Boverflow%3Ahidden%3Btext-overflow%3Aellipsis%3Bwhite-space%3Anowrap%3B%22%3E%27%20%2B%20esc(name)%20%2B%20%27%3C%2Fspan%3E%3Cspan%20style%3D%22flex%3Anone%3Bcolor%3A%2393c5fd%3Bfont-weight%3Abold%3B%22%3E%27%20%2B%20fmt(ms)%20%2B%20%27%3C%2Fspan%3E%27%3B%0Alist.appendChild(r)%3B%0Alist.scrollTop%20%3D%20list.scrollHeight%3B%0A%7D%0Areturn%20%7B%0Astart%3A%20function%20(name)%20%7B%20cur%20%3D%20%7B%20name%3A%20name%20%7C%7C%20%27%27%2C%20t0%3A%20Date.now()%20%7D%3B%20runEl.textContent%20%3D%20%27%E5%A4%84%E7%90%86%E4%B8%AD%E2%80%A6%27%3B%20%7D%2C%0Aend%3A%20function%20(ok)%20%7B%20if%20(!cur)%20return%3B%20var%20ms%20%3D%20Date.now()%20-%20cur.t0%3B%20n%2B%2B%3B%20if%20(ok)%20done%2B%2B%3B%20totalMs%20%2B%3D%20ms%3B%20addRow(cur.name%2C%20!!ok%2C%20ms)%3B%20doneEl.textContent%20%3D%20done%3B%20totalEl.textContent%20%3D%20fmt(totalMs)%3B%20runEl.textContent%20%3D%20%27%27%3B%20cur%20%3D%20null%3B%20%7D%0A%7D%3B%0A%7D)()%3B%0Alet%20COUNT%20%3D%2010%3B%0Alet%20WAIT_MS%20%3D%2030000%3B%0Alet%20MAX_ROUNDS%20%3D%203%3B%0Alet%20MIN_DUR%20%3D%20100%3B%0Alet%20MAX_DUR%20%3D%201000%3B%0Aconst%20LOAD_GAP%20%3D%20500%3B%0Aconst%20DOWNLOAD_GAP%20%3D%202000%3B%0Aconst%20INP_SEL%20%3D%20%27input.el-input__inner%5Bplaceholder%3D%22%E6%90%9C%E7%B4%A2%E4%BA%A7%E5%93%81%E5%90%8D%2F%E7%9F%AD%E5%89%A7%E5%90%8D%2F%E5%85%AC%E5%8F%B8%E5%90%8D%2F%E6%96%87%E6%A1%88%2F%E8%90%BD%E5%9C%B0%E9%A1%B5%22%5D%27%3B%0Aconst%20ROW_SEL%20%3D%20%27.el-table__row%27%3B%0Aconst%20%24%20%3D%20(s%2C%20c)%20%3D%3E%20(c%20%7C%7C%20document).querySelector(s)%3B%0Aconst%20%24%24%20%3D%20(s%2C%20c)%20%3D%3E%20Array.prototype.slice.call((c%20%7C%7C%20document).querySelectorAll(s))%3B%0Aconst%20sleep%20%3D%20function%20sleep(ms)%20%7B%0Areturn%20new%20Promise(function%20(res)%20%7B%0Aif%20(ms%20%3C%3D%200%20%7C%7C%20typeof%20MessageChannel%20%3D%3D%3D%20%27undefined%27)%20%7B%20setTimeout(res%2C%20ms)%3B%20return%3B%20%7D%0Avar%20start%20%3D%20Date.now()%3B%0Avar%20ch%20%3D%20new%20MessageChannel()%3B%0Ach.port1.onmessage%20%3D%20function%20()%20%7B%0Avar%20dt%20%3D%20Date.now()%20-%20start%3B%0Aif%20(dt%20%3E%3D%20ms)%20%7B%20try%20%7B%20ch.port1.close()%3B%20ch.port2.close()%3B%20%7D%20catch%20(e)%20%7B%7D%20res()%3B%20%7D%0Aelse%20%7B%20ch.port2.postMessage(0)%3B%20%7D%0A%7D%3B%0Ach.port1.postMessage(0)%3B%0Ach.port2.postMessage(0)%3B%0A%7D)%3B%0A%7D%3B%0Alet%20STOPPED%20%3D%20false%3B%0Aconst%20stopIfNeeded%20%3D%20async%20()%20%3D%3E%20%7B%0Aif%20(STOPPED)%20throw%20new%20Error(%27%E5%B7%B2%E6%89%8B%E5%8A%A8%E5%81%9C%E6%AD%A2%27)%3B%0A%7D%3B%0Alet%20panel%20%3D%20document.getElementById(%27dl-assist-panel%27)%3B%0Aif%20(!panel)%20%7B%0Apanel%20%3D%20document.createElement(%27div%27)%3B%0Apanel.id%20%3D%20%27dl-assist-panel%27%3B%0Apanel.style.cssText%20%3D%20%27position%3Afixed%3Btop%3A10px%3Bleft%3A10px%3Bz-index%3A2147483647%3Bwidth%3A440px%3Bmax-height%3A82vh%3Bbackground%3A%231e293b%3Bborder%3A1px%20solid%20%23334155%3Bborder-radius%3A10px%3Bbox-shadow%3A0%2010px%2040px%20rgba(0%2C0%2C0%2C.55)%3Bdisplay%3Aflex%3Bflex-direction%3Acolumn%3Bfont%3A12px%2F1.7%20%22Microsoft%20YaHei%22%2CArial%2Csans-serif%3Bcolor%3A%23e2e8f0%3B%27%3B%0Apanel.innerHTML%20%3D%0A%27%3Cdiv%20id%3D%22dl-head%22%20style%3D%22display%3Aflex%3Balign-items%3Acenter%3Bpadding%3A6px%2010px%3Bbackground%3A%230f172a%3Bcolor%3A%234ade80%3Bborder-radius%3A10px%2010px%200%200%3Bfont-weight%3Abold%3Bcursor%3Amove%3Buser-select%3Anone%3B%22%3E%27%20%2B%0A%27%3Cspan%20style%3D%22flex%3A1%3B%22%3E%E7%B4%A0%E6%9D%90%E6%89%B9%E9%87%8F%E4%B8%8B%E8%BD%BD%E5%8A%A9%E6%89%8B%20v4%3C%2Fspan%3E%27%20%2B%0A%27%3Cbutton%20id%3D%22dl-min%22%20title%3D%22%E6%94%B6%E8%B5%B7%2F%E5%B1%95%E5%BC%80%22%20style%3D%22margin-left%3A6px%3Bbackground%3Atransparent%3Bborder%3A0%3Bcolor%3A%23cbd5e1%3Bcursor%3Apointer%3Bfont-size%3A14px%3B%22%3E%E2%80%94%3C%2Fbutton%3E%27%20%2B%0A%27%3Cbutton%20id%3D%22dl-close%22%20title%3D%22%E5%85%B3%E9%97%AD%22%20style%3D%22margin-left%3A4px%3Bbackground%3Atransparent%3Bborder%3A0%3Bcolor%3A%2394a3b8%3Bcursor%3Apointer%3Bfont-size%3A16px%3B%22%3E%C3%97%3C%2Fbutton%3E%27%20%2B%0A%27%3C%2Fdiv%3E%27%20%2B%0A%27%3Cdiv%20id%3D%22dl-main%22%3E%27%20%2B%0A%27%3Cdiv%20style%3D%22padding%3A8px%2012px%3Bborder-bottom%3A1px%20solid%20%23334155%3B%22%3E%27%20%2B%0A%27%3Ctextarea%20id%3D%22dl-names%22%20style%3D%22width%3A100%25%3Bheight%3A66px%3Bbox-sizing%3Aborder-box%3Bresize%3Avertical%3Bbackground%3A%230f172a%3Bcolor%3A%23e2e8f0%3Bborder%3A1px%20solid%20%23334155%3Bborder-radius%3A6px%3Bpadding%3A6px%3Bfont-family%3AConsolas%2Cmonospace%3B%22%20placeholder%3D%22%E6%AF%8F%E8%A1%8C%E4%B8%80%E4%B8%AA%E5%89%A7%E5%90%8D%EF%BC%8C%E5%8F%AF%E6%89%B9%E9%87%8F%E7%B2%98%E8%B4%B4%22%3E%3C%2Ftextarea%3E%27%20%2B%0A%27%3Cdiv%20style%3D%22margin-top%3A6px%3Bdisplay%3Aflex%3Balign-items%3Acenter%3Bflex-wrap%3Awrap%3Bgap%3A6px%3B%22%3E%27%20%2B%0A%27%E6%AF%8F%E5%90%8D%E5%89%8D%20%3Cselect%20id%3D%22dl-count%22%20style%3D%22background%3A%230f172a%3Bcolor%3A%23e2e8f0%3Bborder%3A1px%20solid%20%23334155%3Bborder-radius%3A4px%3B%22%3E%3Coption%3E5%3C%2Foption%3E%3Coption%20selected%3E10%3C%2Foption%3E%3Coption%3E20%3C%2Foption%3E%3C%2Fselect%3E%20%E4%B8%AA%27%20%2B%0A%27%20%E7%AD%89%E5%BE%85%20%3Cselect%20id%3D%22dl-wait%22%20style%3D%22background%3A%230f172a%3Bcolor%3A%23e2e8f0%3Bborder%3A1px%20solid%20%23334155%3Bborder-radius%3A4px%3B%22%3E%3Coption%3E15%3C%2Foption%3E%3Coption%20selected%3E30%3C%2Foption%3E%3Coption%3E45%3C%2Foption%3E%3Coption%3E60%3C%2Foption%3E%3C%2Fselect%3E%20%E7%A7%92%27%20%2B%0A%27%20%E6%9C%80%E5%A4%9A%20%3Cselect%20id%3D%22dl-rounds%22%20style%3D%22background%3A%230f172a%3Bcolor%3A%23e2e8f0%3Bborder%3A1px%20solid%20%23334155%3Bborder-radius%3A4px%3B%22%3E%3Coption%3E1%3C%2Foption%3E%3Coption%20selected%3E3%3C%2Foption%3E%3Coption%3E5%3C%2Foption%3E%3C%2Fselect%3E%20%E8%BD%AE%27%20%2B%0A%27%20%E6%97%B6%E9%95%BF%20%3Cinput%20id%3D%22dl-durmin%22%20type%3D%22number%22%20style%3D%22width%3A52px%3Bbackground%3A%230f172a%3Bcolor%3A%23e2e8f0%3Bborder%3A1px%20solid%20%23334155%3Bborder-radius%3A4px%3B%22%20value%3D%22100%22%3E~%3Cinput%20id%3D%22dl-durmax%22%20type%3D%22number%22%20style%3D%22width%3A52px%3Bbackground%3A%230f172a%3Bcolor%3A%23e2e8f0%3Bborder%3A1px%20solid%20%23334155%3Bborder-radius%3A4px%3B%22%20value%3D%221000%22%3E%20%E7%A7%92%27%20%2B%0A%27%3C%2Fdiv%3E%27%20%2B%0A%27%3Cdiv%20style%3D%22margin-top%3A8px%3Bdisplay%3Aflex%3Bgap%3A6px%3Bflex-wrap%3Awrap%3B%22%3E%27%20%2B%0A%27%3Cbutton%20id%3D%22dl-start%22%20style%3D%22padding%3A5px%2016px%3Bbackground%3A%2322c55e%3Bcolor%3A%23052e16%3Bborder%3A0%3Bborder-radius%3A4px%3Bcursor%3Apointer%3Bfont-weight%3Abold%3B%22%3E%E5%BC%80%E5%A7%8B%3C%2Fbutton%3E%27%20%2B%0A%27%3Cbutton%20id%3D%22dl-stop%22%20style%3D%22padding%3A5px%2016px%3Bbackground%3A%23ef4444%3Bcolor%3A%23fff%3Bborder%3A0%3Bborder-radius%3A4px%3Bcursor%3Apointer%3B%22%3E%E5%81%9C%E6%AD%A2%3C%2Fbutton%3E%27%20%2B%0A%27%3Cbutton%20id%3D%22dl-diag%22%20style%3D%22padding%3A5px%2014px%3Bbackground%3A%23334155%3Bcolor%3A%23cbd5e1%3Bborder%3A0%3Bborder-radius%3A4px%3Bcursor%3Apointer%3B%22%3E%E8%AF%8A%E6%96%AD%3C%2Fbutton%3E%27%20%2B%0A%27%3Cbutton%20id%3D%22dl-clear%22%20style%3D%22padding%3A5px%2014px%3Bbackground%3A%23334155%3Bcolor%3A%23cbd5e1%3Bborder%3A0%3Bborder-radius%3A4px%3Bcursor%3Apointer%3B%22%3E%E6%B8%85%E7%A9%BA%E6%97%A5%E5%BF%97%3C%2Fbutton%3E%27%20%2B%0A%27%3C%2Fdiv%3E%3C%2Fdiv%3E%27%20%2B%0A%27%3Cdiv%20id%3D%22dl-log%22%20style%3D%22flex%3A1%3Boverflow%3Aauto%3Bpadding%3A8px%2012px%3Bmin-height%3A120px%3Bmax-height%3A48vh%3Bbackground%3A%230f172a%3B%22%3E%3C%2Fdiv%3E%27%20%2B%0A%27%3Cdiv%20style%3D%22padding%3A6px%2012px%3Bborder-top%3A1px%20solid%20%23334155%3Bcolor%3A%2394a3b8%3B%22%3E%E7%8A%B6%E6%80%81%EF%BC%9A%3Cspan%20id%3D%22dl-status%22%3E%E5%BE%85%E6%9C%BA%3C%2Fspan%3E%3C%2Fdiv%3E%27%20%2B%0A%27%3C%2Fdiv%3E%27%3B%0Adocument.body.appendChild(panel)%3B%0A%7D%20else%20%7B%0Apanel.style.display%20%3D%20%27block%27%3B%0A%7D%0Aconst%20mainBox%20%3D%20%24(%27%23dl-main%27%2C%20panel)%3B%0Aconst%20logbox%20%3D%20%24(%27%23dl-log%27%2C%20panel)%3B%0Aconst%20statusEl%20%3D%20%24(%27%23dl-status%27%2C%20panel)%3B%0Aconst%20setStatus%20%3D%20(t)%20%3D%3E%20%7B%20statusEl.textContent%20%3D%20t%3B%20%7D%3B%0Aconst%20log%20%3D%20(msg%2C%20cls)%20%3D%3E%20%7B%0Aconst%20d%20%3D%20document.createElement(%27div%27)%3B%0Alet%20color%20%3D%20%27%23cbd5e1%27%3B%0Aif%20(cls%20%3D%3D%3D%20%27ok%27)%20color%20%3D%20%27%234ade80%27%3B%0Aelse%20if%20(cls%20%3D%3D%3D%20%27err%27)%20color%20%3D%20%27%23f87171%27%3B%0Aelse%20if%20(cls%20%3D%3D%3D%20%27warn%27)%20color%20%3D%20%27%23fbbf24%27%3B%0Aelse%20if%20(cls%20%3D%3D%3D%20%27info%27)%20color%20%3D%20%27%2393c5fd%27%3B%0Ad.style.cssText%20%3D%20%27padding%3A2px%200%3Bcolor%3A%27%20%2B%20color%20%2B%20%27%3Bword-break%3Abreak-all%3B%27%3B%0Ad.innerHTML%20%3D%20msg%3B%0Alogbox.appendChild(d)%3B%0Alogbox.scrollTop%20%3D%20logbox.scrollHeight%3B%0A%7D%3B%0Aconst%20head%20%3D%20%24(%27%23dl-head%27%2C%20panel)%3B%0Alet%20dragging%20%3D%20false%2C%20ox%20%3D%200%2C%20oy%20%3D%200%3B%0Ahead.addEventListener(%27mousedown%27%2C%20(e)%20%3D%3E%20%7B%0Aif%20(e.target%20%26%26%20e.target.closest%20%26%26%20e.target.closest(%27button%27))%20return%3B%0Adragging%20%3D%20true%3B%0Aox%20%3D%20e.clientX%20-%20panel.offsetLeft%3B%0Aoy%20%3D%20e.clientY%20-%20panel.offsetTop%3B%0Ae.preventDefault()%3B%0A%7D)%3B%0Adocument.addEventListener(%27mousemove%27%2C%20(e)%20%3D%3E%20%7B%0Aif%20(!dragging)%20return%3B%0Alet%20x%20%3D%20e.clientX%20-%20ox%3B%0Alet%20y%20%3D%20e.clientY%20-%20oy%3B%0Ax%20%3D%20Math.max(0%2C%20Math.min(x%2C%20window.innerWidth%20-%20panel.offsetWidth))%3B%0Ay%20%3D%20Math.max(0%2C%20Math.min(y%2C%20window.innerHeight%20-%2030))%3B%0Apanel.style.left%20%3D%20x%20%2B%20%27px%27%3B%0Apanel.style.top%20%3D%20y%20%2B%20%27px%27%3B%0A%7D)%3B%0Adocument.addEventListener(%27mouseup%27%2C%20()%20%3D%3E%20%7B%20dragging%20%3D%20false%3B%20%7D)%3B%0A%24(%27%23dl-close%27%2C%20panel).onclick%20%3D%20()%20%3D%3E%20%7B%20panel.style.display%20%3D%20%27none%27%3B%20%7D%3B%0A%24(%27%23dl-min%27%2C%20panel).onclick%20%3D%20()%20%3D%3E%20%7B%0Aconst%20hidden%20%3D%20mainBox.style.display%20%3D%3D%3D%20%27none%27%3B%0AmainBox.style.display%20%3D%20hidden%20%3F%20%27%27%20%3A%20%27none%27%3B%0A%24(%27%23dl-min%27%2C%20panel).textContent%20%3D%20hidden%20%3F%20%27%E2%80%94%27%20%3A%20%27%E2%96%A1%27%3B%0A%7D%3B%0Aconst%20setSearch%20%3D%20(name)%20%3D%3E%20%7B%0Aconst%20inp%20%3D%20%24(INP_SEL)%3B%0Aif%20(!inp)%20throw%20new%20Error(%27%E6%9C%AA%E6%89%BE%E5%88%B0%E6%90%9C%E7%B4%A2%E6%A1%86%27)%3B%0Atry%20%7B%20inp.scrollIntoView(%7B%20block%3A%20%27center%27%20%7D)%3B%20%7D%20catch%20(e)%20%7B%7D%0Aconst%20setter%20%3D%20Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype%2C%20%27value%27).set%3B%0Asetter.call(inp%2C%20name)%3B%0Ainp.dispatchEvent(new%20Event(%27input%27%2C%20%7B%20bubbles%3A%20true%20%7D))%3B%0Ainp.dispatchEvent(new%20Event(%27change%27%2C%20%7B%20bubbles%3A%20true%20%7D))%3B%0Aif%20(inp.value%20!%3D%3D%20name)%20%7B%0Asetter.call(inp%2C%20name)%3B%0Ainp.dispatchEvent(new%20Event(%27input%27%2C%20%7B%20bubbles%3A%20true%20%7D))%3B%0A%7D%0A%7D%3B%0Aconst%20clickQuery%20%3D%20()%20%3D%3E%20%7B%0Aconst%20bs%20%3D%20%24%24(%27button%27)%3B%0Alet%20b%20%3D%20bs.find((x)%20%3D%3E%20(x.textContent%20%7C%7C%20%27%27).trim()%20%3D%3D%3D%20%27%E6%9F%A5%E8%AF%A2%27%20%26%26%20%2F120px%2F.test(x.getAttribute(%27style%27)%20%7C%7C%20%27%27))%3B%0Aif%20(!b)%20b%20%3D%20bs.find((x)%20%3D%3E%20(x.textContent%20%7C%7C%20%27%27).trim()%20%3D%3D%3D%20%27%E6%9F%A5%E8%AF%A2%27)%3B%0Aif%20(!b)%20throw%20new%20Error(%27%E6%9C%AA%E6%89%BE%E5%88%B0%E6%9F%A5%E8%AF%A2%E6%8C%89%E9%92%AE%27)%3B%0Ab.click()%3B%0A%7D%3B%0Aconst%20rowStatus%20%3D%20(row)%20%3D%3E%20%7B%0Aconst%20t%20%3D%20%24(%27.el-tag%27%2C%20row)%3B%0Aif%20(!t)%20return%20%27unknown%27%3B%0Aconst%20txt%20%3D%20t.textContent.trim()%3B%0Aif%20(txt.indexOf(%27%E5%B7%B2%E5%8A%A0%E8%BD%BD%27)%20%3E%20-1)%20return%20%27loaded%27%3B%0Aif%20(txt.indexOf(%27%E6%9C%AA%E5%8A%A0%E8%BD%BD%27)%20%3E%20-1)%20return%20%27notloaded%27%3B%0Areturn%20%27unknown%27%3B%0A%7D%3B%0Aconst%20clickDownload%20%3D%20async%20(row)%20%3D%3E%20%7B%0Atry%20%7B%20row.scrollIntoView(%7B%20block%3A%20%27center%27%20%7D)%3B%20%7D%20catch%20(e)%20%7B%7D%0Aawait%20sleep(300)%3B%0Aconst%20b%20%3D%20%24%24(%27button%27%2C%20row).find((x)%20%3D%3E%20(x.textContent%20%7C%7C%20%27%27).indexOf(%27%E4%B8%8B%E8%BD%BD%27)%20%3E%20-1)%3B%0Aif%20(!b)%20throw%20new%20Error(%27%E8%A1%8C%E5%86%85%E6%9C%AA%E6%89%BE%E5%88%B0%E4%B8%8B%E8%BD%BD%E6%8C%89%E9%92%AE%27)%3B%0Ab.click()%3B%0A%7D%3B%0Aconst%20scrollToBottom%20%3D%20()%20%3D%3E%20%7B%0Awindow.scrollTo(0%2C%20document.body.scrollHeight)%3B%0A%24%24(%27.el-table__body-wrapper%27).forEach((w)%20%3D%3E%20%7B%20w.scrollTop%20%3D%20w.scrollHeight%3B%20%7D)%3B%0A%7D%3B%0Aconst%20scrollToTop%20%3D%20()%20%3D%3E%20%7B%0Awindow.scrollTo(0%2C%200)%3B%0A%24%24(%27.el-table__body-wrapper%27).forEach((w)%20%3D%3E%20%7B%20w.scrollTop%20%3D%200%3B%20%7D)%3B%0A%7D%3B%0Aconst%20extractDuration%20%3D%20(row)%20%3D%3E%20%7B%0Aconst%20m%20%3D%20(row.textContent%20%7C%7C%20%27%27).match(%2F%E6%97%B6%E9%95%BF%5B%3A%EF%BC%9A%5D%5Cs*(%5Cd%2B)%5Cs*%E7%A7%92%2F)%3B%0Areturn%20m%20%3F%20parseInt(m%5B1%5D%2C%2010)%20%3A%20null%3B%0A%7D%3B%0Aconst%20durOk%20%3D%20(dur)%20%3D%3E%20dur%20!%3D%3D%20null%20%26%26%20dur%20%3E%3D%20MIN_DUR%20%26%26%20dur%20%3C%3D%20MAX_DUR%3B%0Aconst%20collectValid%20%3D%20async%20(limit)%20%3D%3E%20%7B%0Aconst%20valid%20%3D%20%5B%5D%3B%0Alet%20prev%20%3D%20-1%2C%20same%20%3D%200%3B%0Afor%20(let%20i%20%3D%200%3B%20i%20%3C%2030%3B%20i%2B%2B)%20%7B%0Aconst%20rows%20%3D%20%24%24(ROW_SEL)%3B%0Afor%20(const%20r%20of%20rows)%20%7B%0Aif%20(valid.length%20%3E%3D%20limit)%20break%3B%0Aif%20(valid.indexOf(r)%20%3E%20-1)%20continue%3B%0Aif%20(durOk(extractDuration(r)))%20valid.push(r)%3B%0A%7D%0Aif%20(valid.length%20%3E%3D%20limit)%20break%3B%0Aconst%20cur%20%3D%20rows.length%3B%0Aif%20(cur%20%3D%3D%3D%20prev)%20%7B%20same%2B%2B%3B%20if%20(same%20%3E%3D%204)%20break%3B%20%7D%20else%20same%20%3D%200%3B%0Aprev%20%3D%20cur%3B%0AscrollToBottom()%3B%0Aawait%20sleep(600)%3B%0A%7D%0AscrollToTop()%3B%0Aawait%20sleep(300)%3B%0Areturn%20valid%3B%0A%7D%3B%0Aconst%20waitResults%20%3D%20async%20()%20%3D%3E%20%7B%0Aawait%20sleep(1200)%3B%0Aconst%20t0%20%3D%20Date.now()%3B%0Alet%20last%20%3D%20-1%2C%20stable%20%3D%200%2C%20zero%20%3D%200%3B%0Awhile%20(Date.now()%20-%20t0%20%3C%2015000)%20%7B%0Aconst%20n%20%3D%20%24%24(ROW_SEL).length%3B%0Aif%20(n%20%3D%3D%3D%200)%20%7B%20zero%2B%2B%3B%20if%20(zero%20%3E%3D%2010)%20break%3B%20%7D%0Aelse%20%7B%0Azero%20%3D%200%3B%0Aif%20(n%20%3D%3D%3D%20last)%20%7B%20stable%2B%2B%3B%20if%20(stable%20%3E%3D%202)%20break%3B%20%7D%20else%20stable%20%3D%200%3B%0Alast%20%3D%20n%3B%0A%7D%0Aawait%20sleep(400)%3B%0A%7D%0Aawait%20sleep(800)%3B%0A%7D%3B%0Aconst%20diagnose%20%3D%20async%20()%20%3D%3E%20%7B%0Alog(%27%E2%80%94%E2%80%94%20%E8%AF%8A%E6%96%AD%E5%BC%80%E5%A7%8B%20%E2%80%94%E2%80%94%27%2C%20%27warn%27)%3B%0Aconst%20rows0%20%3D%20%24%24(ROW_SEL)%3B%0Alog(%27%E2%91%A0%20.el-table__row%20%E6%95%B0%E9%87%8F%EF%BC%9A%27%20%2B%20rows0.length%2C%20%27info%27)%3B%0Aconst%20alts%20%3D%20%5B%27tbody%20tr%27%2C%20%27.el-table__body%20tr%27%2C%20%27.el-table%20tbody%20tr%27%2C%20%27.el-table__row%27%5D%3B%0Aalts.forEach((s)%20%3D%3E%20%7B%0Aconst%20n%20%3D%20%24%24(s).length%3B%0Aif%20(n%20%3E%200)%20log(%27%20%20%20%E5%A4%87%E9%80%89%E9%80%89%E6%8B%A9%E5%99%A8%20%27%20%2B%20s%20%2B%20%27%20%E2%86%92%20%27%20%2B%20n%20%2B%20%27%20%E4%B8%AA%27%2C%20%27info%27)%3B%0A%7D)%3B%0Alog(%27%E2%91%A1%20window%3A%20%E5%8F%AF%E8%A7%86%E9%AB%98%20%27%20%2B%20window.innerHeight%20%2B%20%27%EF%BC%8C%E9%A1%B5%E9%9D%A2%E6%80%BB%E9%AB%98%20%27%20%2B%20document.body.scrollHeight%20%2B%20%27%EF%BC%8C%E5%B7%B2%E6%BB%9A%20%27%20%2B%20window.pageYOffset%2C%20%27info%27)%3B%0Aconst%20boxes%20%3D%20%24%24(%27.el-table__body-wrapper%27)%3B%0Aboxes.forEach((w%2C%20i)%20%3D%3E%20%7B%0Alog(%27%20%20%20%E8%A1%A8%E6%A0%BC%E6%BB%9A%E5%8A%A8%E5%AE%B9%E5%99%A8%27%20%2B%20i%20%2B%20%27%3A%20clientHeight%3D%27%20%2B%20w.clientHeight%20%2B%20%27%20scrollHeight%3D%27%20%2B%20w.scrollHeight%20%2B%20%27%20scrollTop%3D%27%20%2B%20w.scrollTop%2C%20%27info%27)%3B%0A%7D)%3B%0Alog(%27%E2%91%A2%20%E5%89%8D%2012%20%E8%A1%8C%E7%8A%B6%E6%80%81%EF%BC%88DOM%20%E9%87%8C%E7%9A%84%EF%BC%89%EF%BC%9A%27%2C%20%27info%27)%3B%0Arows0.slice(0%2C%2012).forEach((r%2C%20i)%20%3D%3E%20%7B%0Aconst%20st%20%3D%20rowStatus(r)%3B%0Aconst%20dur%20%3D%20extractDuration(r)%3B%0Aconst%20txt%20%3D%20(r.textContent%20%7C%7C%20%27%27).trim().replace(%2F%5Cs%2B%2Fg%2C%20%27%20%27).slice(0%2C%2045)%3B%0Alog(%27%20%20%20%E8%A1%8C%27%20%2B%20i%20%2B%20%27%20%5B%27%20%2B%20st%20%2B%20%27%5D%20%E6%97%B6%E9%95%BF%27%20%2B%20(dur%20%3D%3D%3D%20null%20%3F%20%27%3F%27%20%3A%20dur)%20%2B%20%27%E7%A7%92%20%27%20%2B%20txt%2C%20st%20%3D%3D%3D%20%27loaded%27%20%3F%20%27ok%27%20%3A%20(st%20%3D%3D%3D%20%27notloaded%27%20%3F%20%27err%27%20%3A%20%27info%27))%3B%0A%7D)%3B%0Alog(%27%E2%91%A3%20%E6%BB%9A%E5%8A%A8%E6%B5%8B%E8%AF%95%EF%BC%9A%E6%BB%9A%E5%88%B0%E5%BA%95%E9%83%A8%E5%90%8E%E8%A1%8C%E6%95%B0%E5%8F%98%E5%8C%96%EF%BC%88%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E8%99%9A%E6%8B%9F%E6%BB%9A%E5%8A%A8%2F%E6%87%92%E5%8A%A0%E8%BD%BD%EF%BC%89...%27%2C%20%27warn%27)%3B%0Aconst%20before%20%3D%20%24%24(ROW_SEL).length%3B%0AscrollToBottom()%3B%0Aawait%20sleep(1500)%3B%0Aconst%20after%20%3D%20%24%24(ROW_SEL).length%3B%0Alog(%27%20%20%20%E6%BB%9A%E5%8A%A8%E5%89%8D%20%27%20%2B%20before%20%2B%20%27%20%E2%86%92%20%E6%BB%9A%E5%8A%A8%E5%90%8E%20%27%20%2B%20after%2C%20after%20%3E%20before%20%3F%20%27ok%27%20%3A%20%27info%27)%3B%0AscrollToTop()%3B%0Aawait%20sleep(800)%3B%0Aconst%20topN%20%3D%20%24%24(ROW_SEL).length%3B%0Alog(%27%20%20%20%E5%9B%9E%E5%88%B0%E9%A1%B6%E9%83%A8%E5%90%8E%20DOM%20%E8%A1%8C%E6%95%B0%EF%BC%9A%27%20%2B%20topN%2C%20topN%20%3E%3D%20COUNT%20%3F%20%27ok%27%20%3A%20%27err%27)%3B%0Alog(%27%E2%80%94%E2%80%94%20%E8%AF%8A%E6%96%AD%E7%BB%93%E6%9D%9F%EF%BC%88%E6%8A%8A%E4%BB%A5%E4%B8%8A%E5%86%85%E5%AE%B9%E8%B4%B4%E7%BB%99%E5%8A%A9%E6%89%8B%EF%BC%89%E2%80%94%E2%80%94%27%2C%20%27warn%27)%3B%0A%7D%3B%0Aconst%20processOne%20%3D%20async%20(name)%20%3D%3E%20%7B%0AsetSearch(name)%3B%0Aawait%20sleep(300)%3B%0AclickQuery()%3B%0Aawait%20waitResults()%3B%0Alet%20targets%20%3D%20await%20collectValid(COUNT)%3B%0Aif%20(targets.length%20%3D%3D%3D%200)%20%7B%20log(%27%C3%97%20%E6%9C%AA%E6%89%BE%E5%88%B0%E3%80%8C%27%20%2B%20name%20%2B%20%27%E3%80%8D%E7%9A%84%E5%90%88%E6%A0%BC%E7%B4%A0%E6%9D%90%EF%BC%88%E6%97%B6%E9%95%BF%20%27%20%2B%20MIN_DUR%20%2B%20%27~%27%20%2B%20MAX_DUR%20%2B%20%27%20%E7%A7%92%EF%BC%89%27%2C%20%27err%27)%3B%20return%3B%20%7D%0Alog(%27%E2%96%B6%20%E6%89%AB%E6%8F%8F%E5%BE%97%E5%88%B0%20%27%20%2B%20targets.length%20%2B%20%27%20%E4%B8%AA%E5%90%88%E6%A0%BC%E7%B4%A0%E6%9D%90%EF%BC%88%E6%97%B6%E9%95%BF%20%27%20%2B%20MIN_DUR%20%2B%20%27~%27%20%2B%20MAX_DUR%20%2B%20%27%20%E7%A7%92%EF%BC%89%27%2C%20%27info%27)%3B%0Aif%20(targets.length%20%3C%20COUNT)%20log(%27%E2%9A%A0%20%E5%90%88%E6%A0%BC%E7%B4%A0%E6%9D%90%E4%B8%8D%E8%B6%B3%20%27%20%2B%20COUNT%20%2B%20%27%20%E4%B8%AA%EF%BC%8C%E6%8C%89%20%27%20%2B%20targets.length%20%2B%20%27%20%E4%B8%AA%E5%A4%84%E7%90%86%27%2C%20%27warn%27)%3B%0Alet%20allLoaded%20%3D%20false%3B%0Afor%20(let%20rnd%20%3D%201%3B%20rnd%20%3C%3D%20MAX_ROUNDS%3B%20rnd%2B%2B)%20%7B%0Aawait%20stopIfNeeded()%3B%0Atargets%20%3D%20await%20collectValid(COUNT)%3B%0Aconst%20bad%20%3D%20targets.filter((r)%20%3D%3E%20rowStatus(r)%20%3D%3D%3D%20%27notloaded%27)%3B%0Aif%20(bad.length%20%3D%3D%3D%200)%20%7B%20allLoaded%20%3D%20true%3B%20log(%27%E2%88%9A%20%27%20%2B%20targets.length%20%2B%20%27%20%E4%B8%AA%E5%90%88%E6%A0%BC%E7%B4%A0%E6%9D%90%E5%B7%B2%E5%85%A8%E9%83%A8%E5%8A%A0%E8%BD%BD%27%2C%20%27ok%27)%3B%20break%3B%20%7D%0Alog(%27%E7%AC%AC%20%27%20%2B%20rnd%20%2B%20%27%20%E8%BD%AE%EF%BC%9A%27%20%2B%20bad.length%20%2B%20%27%20%E4%B8%AA%E6%9C%AA%E5%8A%A0%E8%BD%BD%EF%BC%8C%E7%82%B9%E5%87%BB%E4%B8%8B%E8%BD%BD%E8%A7%A6%E5%8F%91%E5%8A%A0%E8%BD%BD%EF%BC%8C%E7%AD%89%E5%BE%85%20%27%20%2B%20Math.round(WAIT_MS%20%2F%201000)%20%2B%20%27%20%E7%A7%92...%27%2C%20%27warn%27)%3B%0Afor%20(const%20r%20of%20bad)%20%7B%20try%20%7B%20await%20clickDownload(r)%3B%20%7D%20catch%20(e)%20%7B%7D%20await%20sleep(LOAD_GAP)%3B%20await%20stopIfNeeded()%3B%20%7D%0Aawait%20sleep(WAIT_MS)%3B%0AclickQuery()%3B%0Aawait%20waitResults()%3B%0A%7D%0Aif%20(!allLoaded)%20log(%27%C3%97%20%E5%B7%B2%E8%BE%BE%E6%9C%80%E5%A4%A7%E8%BD%AE%E6%AC%A1%EF%BC%8C%E4%BB%8D%E6%9C%89%E6%9C%AA%E5%8A%A0%E8%BD%BD%27%2C%20%27err%27)%3B%0Atargets%20%3D%20await%20collectValid(COUNT)%3B%0Aconst%20ok%20%3D%20targets.filter((r)%20%3D%3E%20rowStatus(r)%20%3D%3D%3D%20%27loaded%27)%3B%0Aconst%20fail%20%3D%20targets.filter((r)%20%3D%3E%20rowStatus(r)%20!%3D%3D%20%27loaded%27)%3B%0Afor%20(const%20r%20of%20ok)%20%7B%20try%20%7B%20await%20clickDownload(r)%3B%20%7D%20catch%20(e)%20%7B%20log(%27%C3%97%20%E7%82%B9%E5%87%BB%E4%B8%8B%E8%BD%BD%E5%A4%B1%E8%B4%A5%27%2C%20%27err%27)%3B%20%7D%20await%20sleep(DOWNLOAD_GAP)%3B%20await%20stopIfNeeded()%3B%20%7D%0Alog(%27%E2%88%9A%20%E4%B8%8B%E8%BD%BD%E5%AE%8C%E6%88%90%EF%BC%9A%27%20%2B%20ok.length%20%2B%20%27%2F%27%20%2B%20targets.length%20%2B%20(fail.length%20%3F%20%27%EF%BC%88%27%20%2B%20fail.length%20%2B%20%27%20%E4%B8%AA%E6%9C%AA%E5%8A%A0%E8%BD%BD%2F%E4%B8%8D%E5%90%88%E6%A0%BC%E8%B7%B3%E8%BF%87%EF%BC%89%27%20%3A%20%27%27)%2C%20%27ok%27)%3B%0A%7D%3B%0Aconst%20main%20%3D%20async%20()%20%3D%3E%20%7B%0ASTOPPED%20%3D%20false%3B%0Aconst%20names%20%3D%20%24(%27%23dl-names%27%2C%20panel).value.split(%2F%5B%5Cr%5Cn%5D%2B%2F).map((s)%20%3D%3E%20s.trim()).filter(Boolean)%3B%0Aif%20(!names.length)%20%7B%20log(%27%C3%97%20%E8%AF%B7%E5%85%88%E8%BE%93%E5%85%A5%E5%90%8D%E5%AD%97%27%2C%20%27err%27)%3B%20return%3B%20%7D%0ACOUNT%20%3D%20parseInt(%24(%27%23dl-count%27%2C%20panel).value%2C%2010)%20%7C%7C%2010%3B%0AWAIT_MS%20%3D%20(parseInt(%24(%27%23dl-wait%27%2C%20panel).value%2C%2010)%20%7C%7C%2030)%20*%201000%3B%0AMAX_ROUNDS%20%3D%20parseInt(%24(%27%23dl-rounds%27%2C%20panel).value%2C%2010)%20%7C%7C%203%3B%0AMIN_DUR%20%3D%20parseInt(%24(%27%23dl-durmin%27%2C%20panel).value%2C%2010)%3B%0AMAX_DUR%20%3D%20parseInt(%24(%27%23dl-durmax%27%2C%20panel).value%2C%2010)%3B%0Aif%20(!(MIN_DUR%20%3E%3D%200))%20MIN_DUR%20%3D%20100%3B%0Aif%20(!(MAX_DUR%20%3E%20MIN_DUR))%20MAX_DUR%20%3D%201000%3B%0Alog(%27%E5%BC%80%E5%A7%8B%E6%89%B9%E9%87%8F%E5%A4%84%E7%90%86%EF%BC%8C%E5%85%B1%20%27%20%2B%20names.length%20%2B%20%27%20%E4%B8%AA%E5%90%8D%E5%AD%97%EF%BC%88%E6%97%B6%E9%95%BF%E8%BF%87%E6%BB%A4%20%27%20%2B%20MIN_DUR%20%2B%20%27~%27%20%2B%20MAX_DUR%20%2B%20%27%20%E7%A7%92%EF%BC%89%27%2C%20%27info%27)%3B%0Afor%20(let%20i%20%3D%200%3B%20i%20%3C%20names.length%3B%20i%2B%2B)%20%7B%0Aif%20(STOPPED)%20%7B%20log(%27%E5%B7%B2%E5%81%9C%E6%AD%A2%EF%BC%8C%E5%89%A9%E4%BD%99%E5%90%8D%E5%AD%97%E6%9C%AA%E5%A4%84%E7%90%86%27%2C%20%27err%27)%3B%20break%3B%20%7D%0AsetStatus(%27%E5%A4%84%E7%90%86%E4%B8%AD%20%27%20%2B%20(i%20%2B%201)%20%2B%20%27%2F%27%20%2B%20names.length%20%2B%20%27%EF%BC%9A%27%20%2B%20names%5Bi%5D)%3B%0Aif%20(window.TT)%20TT.start(names%5Bi%5D)%3B%0Alog(%27%E2%95%90%E2%95%90%E2%95%90%E2%95%90%20%5B%27%20%2B%20(i%20%2B%201)%20%2B%20%27%2F%27%20%2B%20names.length%20%2B%20%27%5D%20%27%20%2B%20names%5Bi%5D%20%2B%20%27%20%E2%95%90%E2%95%90%E2%95%90%E2%95%90%27%2C%20%27info%27)%3B%0Avar%20_ok%20%3D%20true%3B%0Atry%20%7B%20await%20processOne(names%5Bi%5D)%3B%20%7D%20catch%20(e)%20%7B%20_ok%20%3D%20false%3B%20log(%27%C3%97%20%E5%A4%84%E7%90%86%E5%A4%B1%E8%B4%A5%EF%BC%9A%27%20%2B%20(e%20%26%26%20e.message%20%7C%7C%20e)%2C%20%27err%27)%3B%20%7D%0Aif%20(window.TT)%20TT.end(_ok)%3B%0A%7D%0AsetStatus(%27%E5%85%A8%E9%83%A8%E5%AE%8C%E6%88%90%27)%3B%0Alog(%27%E2%88%9A%20%E5%85%A8%E9%83%A8%E5%A4%84%E7%90%86%E5%AE%8C%E6%88%90%27%2C%20%27ok%27)%3B%0A%7D%3B%0A%24(%27%23dl-start%27%2C%20panel).onclick%20%3D%20main%3B%0A%24(%27%23dl-stop%27%2C%20panel).onclick%20%3D%20()%20%3D%3E%20%7B%20STOPPED%20%3D%20true%3B%20log(%27%E5%B7%B2%E8%AF%B7%E6%B1%82%E5%81%9C%E6%AD%A2%EF%BC%88%E5%BD%93%E5%89%8D%E6%AD%A5%E9%AA%A4%E5%AE%8C%E6%88%90%E5%90%8E%E5%81%9C%E6%AD%A2%EF%BC%89%27%2C%20%27warn%27)%3B%20%7D%3B%0A%24(%27%23dl-diag%27%2C%20panel).onclick%20%3D%20()%20%3D%3E%20%7B%20diagnose()%3B%20%7D%3B%0A%24(%27%23dl-clear%27%2C%20panel).onclick%20%3D%20()%20%3D%3E%20%7B%20logbox.innerHTML%20%3D%20%27%27%3B%20%7D%3B%0Alog(%27%E9%9D%A2%E6%9D%BF%E5%B7%B2%E5%B0%B1%E7%BB%AA%20v4%EF%BC%9A%E5%8F%AF%E6%8B%96%E5%8A%A8%2F%E5%85%B3%E9%97%AD%2F%E6%94%B6%E8%B5%B7%2F%E5%81%9C%E6%AD%A2%EF%BC%9B%E6%8C%89%E6%97%B6%E9%95%BF%20%27%20%2B%20MIN_DUR%20%2B%20%27~%27%20%2B%20MAX_DUR%20%2B%20%27%20%E7%A7%92%E8%BF%87%E6%BB%A4%E5%87%91%E6%BB%A1%20%27%20%2B%20COUNT%20%2B%20%27%20%E4%B8%AA%E3%80%82%27%2C%20%27info%27)%3B%0A%7D)()%3B">素材批量下载助手 v4</a></p>
+    <p><b>方式二：</b>点下面按钮复制书签链接，手动新建书签粘贴。</p>
+    <p><button class="btn" id="copyBtn">复制书签链接</button> <span id="copyTip" style="color:#0a8f2b;"></span></p>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;">v4 修复：名字按“行”分隔</h2>
+    <p>剧名里自带中文逗号（如 <b>「唢呐修仙，一曲炸翻修仙界第七季」</b>）是一整个剧名，之前会被错误拆成两个。v4 起<b>只按换行分行</b>，一个剧名一整行，逗号保留。</p>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;">功能汇总</h2>
+    <table>
+      <tr><th>功能</th><th>说明</th></tr>
+      <tr><td>名字输入</td><td>每行一个剧名，可批量粘贴；一行 = 一个剧</td></tr>
+      <tr><td>时长过滤</td><td>跳过时长 &lt;100 或 &gt;1000 秒的素材，凑满 10 个合格素材（范围可改）</td></tr>
+      <tr><td>加载处理</td><td>未加载的先点下载触发 → 等 30 秒 → 点查询 → 最多 3 轮 → 全部已加载后逐个下载</td></tr>
+      <tr><td>面板</td><td>可拖动 / 关闭 × / 收起 — / 停止 / 诊断 / 清空日志</td></tr>
+      <tr><td>日志</td><td>绿√成功 / 红×失败 / 橙提示</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;">使用步骤</h2>
+    <ol>
+      <li>打开创量投放平台 → <b>素材筛选</b> 页并登录。</li>
+      <li>点书签，出现面板。</li>
+      <li>文本框里<b>每行一个剧名</b>，点<b>开始</b>。脚本自动：输入名字→查询→扫描并跳过时长不合格的→凑满10个→触发加载→下载→下一个名字。</li>
+      <li>日志绿色√成功 / 红色×失败 / 橙色提示。</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;">排查“只下载前4个”：先用「诊断」</h2>
+    <p>在素材筛选页搜出结果后点<b>「诊断」</b>，把日志整段复制发给助手。重点看：</p>
+    <ul>
+      <li><b>① .el-table__row 数量</b>：若只有 4~6 个，说明表格是<b>虚拟滚动</b>（DOM 只渲染可见行），需要改成“逐行滚动处理”逻辑。</li>
+      <li><b>④ 滚动测试</b>：滚动后行数是否变化，判断是否懒加载。</li>
+      <li><b>③ 前12行</b>：会附带每行时长，确认时长读取正确。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="warn"><b>注意：</b>若浏览器弹「此网站正在尝试下载多个文件」，点<b>允许</b>。处理期间保持页面在前台，不要刷新/切走。</div>
+    <div class="ok"><b>说明：</b>下载按平台口径执行（扣今日下载量额度）。若合格素材不足 10 个，按实际数量下载。</div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;">源码（v4，可自行修改）</h2>
+    <pre id="src">// =============================================================
+// 创量投放平台「素材筛选」页 &#183; 批量下载助手 书签 v4
+// -------------------------------------------------------------
+// v4 新增：名字按行分隔，剧名内的逗号不再拆分
+// v3 新增：时长过滤
+//  按顺序扫描素材，跳过 时长&lt;MIN_DUR 或 &gt;MAX_DUR 的（默认100~1000秒），
+//  继续往后找，直到凑满 COUNT 个合格素材再下载。
+// v2 已有：
+//  1) 面板可拖动（按住标题栏拖动）
+//  2) 面板可关闭（&#215;）、可收起（—）、可停止（停止）
+//  3) 「诊断」按钮：输出真实 DOM 行数/滚动容器/前12行状态
+//  4) 点击每个下载前先滚动到可视区
+//  5) 查询后先回到顶部再取前 N 个，保证顺序
+// =============================================================
+(() =&gt; {
+  &#39;use strict&#39;;
+
+  // ===== 可调参数（面板下拉也可改） =====
+  // 每个名字取前 N 个素材
+  let COUNT = 10;
+  // 触发加载后等待毫秒数
+  let WAIT_MS = 30000;
+  // 最多“等待+查询”轮次
+  let MAX_ROUNDS = 3;
+  // 时长过滤：只保留 [MIN_DUR, MAX_DUR] 秒内的素材（面板可改）
+  let MIN_DUR = 100;
+  let MAX_DUR = 1000;
+  // 触发加载时连续点击间隔(ms)
+  const LOAD_GAP = 500;
+  // 正式下载时连续点击间隔(ms)
+  const DOWNLOAD_GAP = 2000;
+
+  // ===== 页面元素选择器 =====
+  const INP_SEL = &#39;input.el-input__inner[placeholder=&quot;搜索产品名/短剧名/公司名/文案/落地页&quot;]&#39;;
+  const ROW_SEL = &#39;.el-table__row&#39;;
+
+  const $ = (s, c) =&gt; (c || document).querySelector(s);
+  const $$ = (s, c) =&gt; Array.prototype.slice.call((c || document).querySelectorAll(s));
+
+  const sleep = (ms) =&gt; {
+    const t0 = Date.now();
+    return new Promise((resolve) =&gt; {
+      const loop = () =&gt; (Date.now() - t0 &gt;= ms ? resolve() : setTimeout(loop, 200));
+      loop();
+    });
+  };
+
+  // 停止标记
+  let STOPPED = false;
+  const stopIfNeeded = async () =&gt; {
+    if (STOPPED) throw new Error(&#39;已手动停止&#39;);
+  };
+
+  // ===== 浮层面板 =====
+  let panel = document.getElementById(&#39;dl-assist-panel&#39;);
+  if (!panel) {
+    panel = document.createElement(&#39;div&#39;);
+    panel.id = &#39;dl-assist-panel&#39;;
+    panel.style.cssText = &#39;position:fixed;top:10px;left:10px;z-index:2147483647;width:440px;max-height:82vh;background:#fff;border:1px solid #c6c9cf;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,.25);display:flex;flex-direction:column;font:12px/1.7 &quot;Microsoft YaHei&quot;,Arial,sans-serif;color:#333;&#39;;
+    panel.innerHTML =
+      &#39;&lt;div id=&quot;dl-head&quot; style=&quot;display:flex;align-items:center;padding:6px 10px;background:#2f6bff;color:#fff;border-radius:8px 8px 0 0;font-weight:bold;cursor:move;user-select:none;&quot;&gt;&#39; +
+      &#39;&lt;span style=&quot;flex:1;&quot;&gt;素材批量下载助手 v4&lt;/span&gt;&#39; +
+      &#39;&lt;button id=&quot;dl-min&quot; title=&quot;收起/展开&quot; style=&quot;margin-left:6px;background:transparent;border:0;color:#fff;cursor:pointer;font-size:14px;&quot;&gt;—&lt;/button&gt;&#39; +
+      &#39;&lt;button id=&quot;dl-close&quot; title=&quot;关闭&quot; style=&quot;margin-left:4px;background:transparent;border:0;color:#fff;cursor:pointer;font-size:16px;&quot;&gt;&#215;&lt;/button&gt;&#39; +
+      &#39;&lt;/div&gt;&#39; +
+      &#39;&lt;div id=&quot;dl-main&quot;&gt;&#39; +
+      &#39;&lt;div style=&quot;padding:8px 12px;border-bottom:1px solid #eee;&quot;&gt;&#39; +
+      &#39;&lt;textarea id=&quot;dl-names&quot; style=&quot;width:100%;height:66px;box-sizing:border-box;resize:vertical;&quot; placeholder=&quot;每行一个剧名，可批量粘贴&quot;&gt;&lt;/textarea&gt;&#39; +
+      &#39;&lt;div style=&quot;margin-top:6px;display:flex;align-items:center;flex-wrap:wrap;gap:6px;&quot;&gt;&#39; +
+      &#39;每名前 &lt;select id=&quot;dl-count&quot;&gt;&lt;option&gt;5&lt;/option&gt;&lt;option selected&gt;10&lt;/option&gt;&lt;option&gt;20&lt;/option&gt;&lt;/select&gt; 个&#39; +
+      &#39; 等待 &lt;select id=&quot;dl-wait&quot;&gt;&lt;option&gt;15&lt;/option&gt;&lt;option selected&gt;30&lt;/option&gt;&lt;option&gt;45&lt;/option&gt;&lt;option&gt;60&lt;/option&gt;&lt;/select&gt; 秒&#39; +
+      &#39; 最多 &lt;select id=&quot;dl-rounds&quot;&gt;&lt;option&gt;1&lt;/option&gt;&lt;option selected&gt;3&lt;/option&gt;&lt;option&gt;5&lt;/option&gt;&lt;/select&gt; 轮&#39; +
+      &#39; 时长 &lt;input id=&quot;dl-durmin&quot; type=&quot;number&quot; style=&quot;width:52px;&quot; value=&quot;100&quot;&gt;~&lt;input id=&quot;dl-durmax&quot; type=&quot;number&quot; style=&quot;width:52px;&quot; value=&quot;1000&quot;&gt; 秒&#39; +
+      &#39;&lt;/div&gt;&#39; +
+      &#39;&lt;div style=&quot;margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;&quot;&gt;&#39; +
+      &#39;&lt;button id=&quot;dl-start&quot; style=&quot;padding:5px 16px;background:#2f6bff;color:#fff;border:0;border-radius:4px;cursor:pointer;&quot;&gt;开始&lt;/button&gt;&#39; +
+      &#39;&lt;button id=&quot;dl-stop&quot; style=&quot;padding:5px 16px;background:#d93025;color:#fff;border:0;border-radius:4px;cursor:pointer;&quot;&gt;停止&lt;/button&gt;&#39; +
+      &#39;&lt;button id=&quot;dl-diag&quot; style=&quot;padding:5px 14px;background:#fff;color:#333;border:1px solid #c6c9cf;border-radius:4px;cursor:pointer;&quot;&gt;诊断&lt;/button&gt;&#39; +
+      &#39;&lt;button id=&quot;dl-clear&quot; style=&quot;padding:5px 14px;background:#fff;color:#333;border:1px solid #c6c9cf;border-radius:4px;cursor:pointer;&quot;&gt;清空日志&lt;/button&gt;&#39; +
+      &#39;&lt;/div&gt;&lt;/div&gt;&#39; +
+      &#39;&lt;div id=&quot;dl-log&quot; style=&quot;flex:1;overflow:auto;padding:8px 12px;min-height:120px;max-height:48vh;&quot;&gt;&lt;/div&gt;&#39; +
+      &#39;&lt;div style=&quot;padding:6px 12px;border-top:1px solid #eee;color:#999;&quot;&gt;状态：&lt;span id=&quot;dl-status&quot;&gt;待机&lt;/span&gt;&lt;/div&gt;&#39; +
+      &#39;&lt;/div&gt;&#39;;
+    document.body.appendChild(panel);
+  } else {
+    panel.style.display = &#39;block&#39;;
+  }
+  const mainBox = $(&#39;#dl-main&#39;, panel);
+  const logbox = $(&#39;#dl-log&#39;, panel);
+  const statusEl = $(&#39;#dl-status&#39;, panel);
+  const setStatus = (t) =&gt; { statusEl.textContent = t; };
+  const log = (msg, cls) =&gt; {
+    const d = document.createElement(&#39;div&#39;);
+    let color = &#39;#555&#39;;
+    if (cls === &#39;ok&#39;) color = &#39;#0a8f2b&#39;;
+    else if (cls === &#39;err&#39;) color = &#39;#d93025&#39;;
+    else if (cls === &#39;warn&#39;) color = &#39;#e37400&#39;;
+    d.style.cssText = &#39;padding:2px 0;color:&#39; + color + &#39;;word-break:break-all;&#39;;
+    d.innerHTML = msg;
+    logbox.appendChild(d);
+    logbox.scrollTop = logbox.scrollHeight;
+  };
+
+  // ===== 面板交互：拖动 / 关闭 / 收起 =====
+  const head = $(&#39;#dl-head&#39;, panel);
+  let dragging = false, ox = 0, oy = 0;
+  head.addEventListener(&#39;mousedown&#39;, (e) =&gt; {
+    if (e.target &amp;&amp; e.target.closest &amp;&amp; e.target.closest(&#39;button&#39;)) return;
+    dragging = true;
+    ox = e.clientX - panel.offsetLeft;
+    oy = e.clientY - panel.offsetTop;
+    e.preventDefault();
+  });
+  document.addEventListener(&#39;mousemove&#39;, (e) =&gt; {
+    if (!dragging) return;
+    let x = e.clientX - ox;
+    let y = e.clientY - oy;
+    x = Math.max(0, Math.min(x, window.innerWidth - panel.offsetWidth));
+    y = Math.max(0, Math.min(y, window.innerHeight - 30));
+    panel.style.left = x + &#39;px&#39;;
+    panel.style.top = y + &#39;px&#39;;
+  });
+  document.addEventListener(&#39;mouseup&#39;, () =&gt; { dragging = false; });
+  $(&#39;#dl-close&#39;, panel).onclick = () =&gt; { panel.style.display = &#39;none&#39;; };
+  $(&#39;#dl-min&#39;, panel).onclick = () =&gt; {
+    const hidden = mainBox.style.display === &#39;none&#39;;
+    mainBox.style.display = hidden ? &#39;&#39; : &#39;none&#39;;
+    $(&#39;#dl-min&#39;, panel).textContent = hidden ? &#39;—&#39; : &#39;□&#39;;
+  };
+
+  // ===== 核心操作 =====
+  const setSearch = (name) =&gt; {
+    const inp = $(INP_SEL);
+    if (!inp) throw new Error(&#39;未找到搜索框&#39;);
+    try { inp.scrollIntoView({ block: &#39;center&#39; }); } catch (e) {}
+    const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, &#39;value&#39;).set;
+    setter.call(inp, name);
+    inp.dispatchEvent(new Event(&#39;input&#39;, { bubbles: true }));
+    inp.dispatchEvent(new Event(&#39;change&#39;, { bubbles: true }));
+    if (inp.value !== name) {
+      setter.call(inp, name);
+      inp.dispatchEvent(new Event(&#39;input&#39;, { bubbles: true }));
+    }
+  };
+
+  const clickQuery = () =&gt; {
+    const bs = $$(&#39;button&#39;);
+    let b = bs.find((x) =&gt; (x.textContent || &#39;&#39;).trim() === &#39;查询&#39; &amp;&amp; /120px/.test(x.getAttribute(&#39;style&#39;) || &#39;&#39;));
+    if (!b) b = bs.find((x) =&gt; (x.textContent || &#39;&#39;).trim() === &#39;查询&#39;);
+    if (!b) throw new Error(&#39;未找到查询按钮&#39;);
+    b.click();
+  };
+
+  const rowStatus = (row) =&gt; {
+    const t = $(&#39;.el-tag&#39;, row);
+    if (!t) return &#39;unknown&#39;;
+    const txt = t.textContent.trim();
+    if (txt.indexOf(&#39;已加载&#39;) &gt; -1) return &#39;loaded&#39;;
+    if (txt.indexOf(&#39;未加载&#39;) &gt; -1) return &#39;notloaded&#39;;
+    return &#39;unknown&#39;;
+  };
+
+  const clickDownload = async (row) =&gt; {
+    try { row.scrollIntoView({ block: &#39;center&#39; }); } catch (e) {}
+    await sleep(300);
+    const b = $$(&#39;button&#39;, row).find((x) =&gt; (x.textContent || &#39;&#39;).indexOf(&#39;下载&#39;) &gt; -1);
+    if (!b) throw new Error(&#39;行内未找到下载按钮&#39;);
+    b.click();
+  };
+
+  const scrollToBottom = () =&gt; {
+    window.scrollTo(0, document.body.scrollHeight);
+    $$(&#39;.el-table__body-wrapper&#39;).forEach((w) =&gt; { w.scrollTop = w.scrollHeight; });
+  };
+  const scrollToTop = () =&gt; {
+    window.scrollTo(0, 0);
+    $$(&#39;.el-table__body-wrapper&#39;).forEach((w) =&gt; { w.scrollTop = 0; });
+  };
+
+  // 从行文本里取时长（秒），格式如“时长: 371秒”
+  const extractDuration = (row) =&gt; {
+    const m = (row.textContent || &#39;&#39;).match(/时长[:：]\s*(\d+)\s*秒/);
+    return m ? parseInt(m[1], 10) : null;
+  };
+  const durOk = (dur) =&gt; dur !== null &amp;&amp; dur &gt;= MIN_DUR &amp;&amp; dur &lt;= MAX_DUR;
+
+  // 按顺序扫描行，跳过时长不合格的，凑满 limit 个合格素材（必要时滚动加载更多）
+  const collectValid = async (limit) =&gt; {
+    const valid = [];
+    let prev = -1, same = 0;
+    for (let i = 0; i &lt; 30; i++) {
+      const rows = $$(ROW_SEL);
+      for (const r of rows) {
+        if (valid.length &gt;= limit) break;
+        if (valid.indexOf(r) &gt; -1) continue;
+        if (durOk(extractDuration(r))) valid.push(r);
+      }
+      if (valid.length &gt;= limit) break;
+      const cur = rows.length;
+      if (cur === prev) { same++; if (same &gt;= 4) break; } else same = 0;
+      prev = cur;
+      scrollToBottom();
+      await sleep(600);
+    }
+    scrollToTop();
+    await sleep(300);
+    return valid;
+  };
+
+  // 等待查询结果：行数稳定即认为加载完成
+  const waitResults = async () =&gt; {
+    await sleep(1200);
+    const t0 = Date.now();
+    let last = -1, stable = 0, zero = 0;
+    while (Date.now() - t0 &lt; 15000) {
+      const n = $$(ROW_SEL).length;
+      if (n === 0) { zero++; if (zero &gt;= 10) break; }
+      else {
+        zero = 0;
+        if (n === last) { stable++; if (stable &gt;= 2) break; } else stable = 0;
+        last = n;
+      }
+      await sleep(400);
+    }
+    await sleep(800);
+  };
+
+  // ===== 诊断：输出真实 DOM 情况 =====
+  const diagnose = async () =&gt; {
+    log(&#39;—— 诊断开始 ——&#39;, &#39;warn&#39;);
+    const rows0 = $$(ROW_SEL);
+    log(&#39;① .el-table__row 数量：&#39; + rows0.length, &#39;info&#39;);
+    const alts = [&#39;tbody tr&#39;, &#39;.el-table__body tr&#39;, &#39;.el-table tbody tr&#39;, &#39;.el-table__row&#39;];
+    alts.forEach((s) =&gt; {
+      const n = $$(s).length;
+      if (n &gt; 0) log(&#39;   备选选择器 &#39; + s + &#39; → &#39; + n + &#39; 个&#39;, &#39;info&#39;);
+    });
+    log(&#39;② window: 可视高 &#39; + window.innerHeight + &#39;，页面总高 &#39; + document.body.scrollHeight + &#39;，已滚 &#39; + window.pageYOffset, &#39;info&#39;);
+    const boxes = $$(&#39;.el-table__body-wrapper&#39;);
+    boxes.forEach((w, i) =&gt; {
+      log(&#39;   表格滚动容器&#39; + i + &#39;: clientHeight=&#39; + w.clientHeight + &#39; scrollHeight=&#39; + w.scrollHeight + &#39; scrollTop=&#39; + w.scrollTop, &#39;info&#39;);
+    });
+    log(&#39;③ 前 12 行状态（DOM 里的）：&#39;, &#39;info&#39;);
+    rows0.slice(0, 12).forEach((r, i) =&gt; {
+      const st = rowStatus(r);
+      const dur = extractDuration(r);
+      const txt = (r.textContent || &#39;&#39;).trim().replace(/\s+/g, &#39; &#39;).slice(0, 45);
+      log(&#39;   行&#39; + i + &#39; [&#39; + st + &#39;] 时长&#39; + (dur === null ? &#39;?&#39; : dur) + &#39;秒 &#39; + txt, st === &#39;loaded&#39; ? &#39;ok&#39; : (st === &#39;notloaded&#39; ? &#39;err&#39; : &#39;info&#39;));
+    });
+    log(&#39;④ 滚动测试：滚到底部后行数变化（判断是否虚拟滚动/懒加载）...&#39;, &#39;warn&#39;);
+    const before = $$(ROW_SEL).length;
+    scrollToBottom();
+    await sleep(1500);
+    const after = $$(ROW_SEL).length;
+    log(&#39;   滚动前 &#39; + before + &#39; → 滚动后 &#39; + after, after &gt; before ? &#39;ok&#39; : &#39;info&#39;);
+    scrollToTop();
+    await sleep(800);
+    const topN = $$(ROW_SEL).length;
+    log(&#39;   回到顶部后 DOM 行数：&#39; + topN, topN &gt;= COUNT ? &#39;ok&#39; : &#39;err&#39;);
+    log(&#39;—— 诊断结束（把以上内容贴给助手）——&#39;, &#39;warn&#39;);
+  };
+
+  // ===== 单个名字处理 =====
+  const processOne = async (name) =&gt; {
+    setSearch(name);
+    await sleep(300);
+    clickQuery();
+    await waitResults();
+    let targets = await collectValid(COUNT);
+    if (targets.length === 0) { log(&#39;&#215; 未找到「&#39; + name + &#39;」的合格素材（时长 &#39; + MIN_DUR + &#39;~&#39; + MAX_DUR + &#39; 秒）&#39;, &#39;err&#39;); return; }
+    log(&#39;▶ 扫描得到 &#39; + targets.length + &#39; 个合格素材（时长 &#39; + MIN_DUR + &#39;~&#39; + MAX_DUR + &#39; 秒）&#39;, &#39;info&#39;);
+    if (targets.length &lt; COUNT) log(&#39;⚠ 合格素材不足 &#39; + COUNT + &#39; 个，按 &#39; + targets.length + &#39; 个处理&#39;, &#39;warn&#39;);
+    let allLoaded = false;
+    for (let rnd = 1; rnd &lt;= MAX_ROUNDS; rnd++) {
+      await stopIfNeeded();
+      targets = await collectValid(COUNT);
+      const bad = targets.filter((r) =&gt; rowStatus(r) === &#39;notloaded&#39;);
+      if (bad.length === 0) { allLoaded = true; log(&#39;√ &#39; + targets.length + &#39; 个合格素材已全部加载&#39;, &#39;ok&#39;); break; }
+      log(&#39;第 &#39; + rnd + &#39; 轮：&#39; + bad.length + &#39; 个未加载，点击下载触发加载，等待 &#39; + Math.round(WAIT_MS / 1000) + &#39; 秒...&#39;, &#39;warn&#39;);
+      for (const r of bad) { try { await clickDownload(r); } catch (e) {} await sleep(LOAD_GAP); await stopIfNeeded(); }
+      await sleep(WAIT_MS);
+      clickQuery();
+      await waitResults();
+    }
+    if (!allLoaded) log(&#39;&#215; 已达最大轮次，仍有未加载&#39;, &#39;err&#39;);
+    targets = await collectValid(COUNT);
+    const ok = targets.filter((r) =&gt; rowStatus(r) === &#39;loaded&#39;);
+    const fail = targets.filter((r) =&gt; rowStatus(r) !== &#39;loaded&#39;);
+    for (const r of ok) { try { await clickDownload(r); } catch (e) { log(&#39;&#215; 点击下载失败&#39;, &#39;err&#39;); } await sleep(DOWNLOAD_GAP); await stopIfNeeded(); }
+    log(&#39;√ 下载完成：&#39; + ok.length + &#39;/&#39; + targets.length + (fail.length ? &#39;（&#39; + fail.length + &#39; 个未加载/不合格跳过）&#39; : &#39;&#39;), &#39;ok&#39;);
+  };
+
+  // ===== 主流程 =====
+  const main = async () =&gt; {
+    STOPPED = false;
+    const names = $(&#39;#dl-names&#39;, panel).value.split(/[\r\n]+/).map((s) =&gt; s.trim()).filter(Boolean);
+    if (!names.length) { log(&#39;&#215; 请先输入名字&#39;, &#39;err&#39;); return; }
+    COUNT = parseInt($(&#39;#dl-count&#39;, panel).value, 10) || 10;
+    WAIT_MS = (parseInt($(&#39;#dl-wait&#39;, panel).value, 10) || 30) * 1000;
+    MAX_ROUNDS = parseInt($(&#39;#dl-rounds&#39;, panel).value, 10) || 3;
+    MIN_DUR = parseInt($(&#39;#dl-durmin&#39;, panel).value, 10);
+    MAX_DUR = parseInt($(&#39;#dl-durmax&#39;, panel).value, 10);
+    if (!(MIN_DUR &gt;= 0)) MIN_DUR = 100;
+    if (!(MAX_DUR &gt; MIN_DUR)) MAX_DUR = 1000;
+    log(&#39;开始批量处理，共 &#39; + names.length + &#39; 个名字（时长过滤 &#39; + MIN_DUR + &#39;~&#39; + MAX_DUR + &#39; 秒）&#39;, &#39;info&#39;);
+    for (let i = 0; i &lt; names.length; i++) {
+      if (STOPPED) { log(&#39;已停止，剩余名字未处理&#39;, &#39;err&#39;); break; }
+      setStatus(&#39;处理中 &#39; + (i + 1) + &#39;/&#39; + names.length + &#39;：&#39; + names[i]);
+      log(&#39;════ [&#39; + (i + 1) + &#39;/&#39; + names.length + &#39;] &#39; + names[i] + &#39; ════&#39;, &#39;info&#39;);
+      try { await processOne(names[i]); } catch (e) { log(&#39;&#215; 处理失败：&#39; + (e &amp;&amp; e.message || e), &#39;err&#39;); }
+    }
+    setStatus(&#39;全部完成&#39;);
+    log(&#39;√ 全部处理完成&#39;, &#39;ok&#39;);
+  };
+
+  // ===== 按钮绑定 =====
+  $(&#39;#dl-start&#39;, panel).onclick = main;
+  $(&#39;#dl-stop&#39;, panel).onclick = () =&gt; { STOPPED = true; log(&#39;已请求停止（当前步骤完成后停止）&#39;, &#39;warn&#39;); };
+  $(&#39;#dl-diag&#39;, panel).onclick = () =&gt; { diagnose(); };
+  $(&#39;#dl-clear&#39;, panel).onclick = () =&gt; { logbox.innerHTML = &#39;&#39;; };
+  log(&#39;面板已就绪 v4：可拖动/关闭/收起/停止；按时长 &#39; + MIN_DUR + &#39;~&#39; + MAX_DUR + &#39; 秒过滤凑满 &#39; + COUNT + &#39; 个。&#39;, &#39;info&#39;);
+})();
+</pre>
+  </div>
+</div>
+
+<script>
+  var LINK = 'javascript:(()%20%3D%3E%20%7B%20'use%20strict'%3B%20let%20COUNT%20%3D%2010%3B%20let%20WAIT_MS%20%3D%2030000%3B%20let%20MAX_ROUNDS%20%3D%203%3B%20let%20MIN_DUR%20%3D%20100%3B%20let%20MAX_DUR%20%3D%201000%3B%20const%20LOAD_GAP%20%3D%20500%3B%20const%20DOWNLOAD_GAP%20%3D%202000%3B%20const%20INP_SEL%20%3D%20'input.el-input__inner%5Bplaceholder%3D%22%E6%90%9C%E7%B4%A2%E4%BA%A7%E5%93%81%E5%90%8D%2F%E7%9F%AD%E5%89%A7%E5%90%8D%2F%E5%85%AC%E5%8F%B8%E5%90%8D%2F%E6%96%87%E6%A1%88%2F%E8%90%BD%E5%9C%B0%E9%A1%B5%22%5D'%3B%20const%20ROW_SEL%20%3D%20'.el-table__row'%3B%20const%20%24%20%3D%20(s%2C%20c)%20%3D%3E%20(c%20%7C%7C%20document).querySelector(s)%3B%20const%20%24%24%20%3D%20(s%2C%20c)%20%3D%3E%20Array.prototype.slice.call((c%20%7C%7C%20document).querySelectorAll(s))%3B%20const%20sleep%20%3D%20(ms)%20%3D%3E%20%7B%20const%20t0%20%3D%20Date.now()%3B%20return%20new%20Promise((resolve)%20%3D%3E%20%7B%20const%20loop%20%3D%20()%20%3D%3E%20(Date.now()%20-%20t0%20%3E%3D%20ms%20%3F%20resolve()%20%3A%20setTimeout(loop%2C%20200))%3B%20loop()%3B%20%7D)%3B%20%7D%3B%20let%20STOPPED%20%3D%20false%3B%20const%20stopIfNeeded%20%3D%20async%20()%20%3D%3E%20%7B%20if%20(STOPPED)%20throw%20new%20Error('%E5%B7%B2%E6%89%8B%E5%8A%A8%E5%81%9C%E6%AD%A2')%3B%20%7D%3B%20let%20panel%20%3D%20document.getElementById('dl-assist-panel')%3B%20if%20(!panel)%20%7B%20panel%20%3D%20document.createElement('div')%3B%20panel.id%20%3D%20'dl-assist-panel'%3B%20panel.style.cssText%20%3D%20'position%3Afixed%3Btop%3A10px%3Bleft%3A10px%3Bz-index%3A2147483647%3Bwidth%3A440px%3Bmax-height%3A82vh%3Bbackground%3A%23fff%3Bborder%3A1px%20solid%20%23c6c9cf%3Bborder-radius%3A8px%3Bbox-shadow%3A0%204px%2020px%20rgba(0%2C0%2C0%2C.25)%3Bdisplay%3Aflex%3Bflex-direction%3Acolumn%3Bfont%3A12px%2F1.7%20%22Microsoft%20YaHei%22%2CArial%2Csans-serif%3Bcolor%3A%23333%3B'%3B%20panel.innerHTML%20%3D%20'%3Cdiv%20id%3D%22dl-head%22%20style%3D%22display%3Aflex%3Balign-items%3Acenter%3Bpadding%3A6px%2010px%3Bbackground%3A%232f6bff%3Bcolor%3A%23fff%3Bborder-radius%3A8px%208px%200%200%3Bfont-weight%3Abold%3Bcursor%3Amove%3Buser-select%3Anone%3B%22%3E'%20%2B%20'%3Cspan%20style%3D%22flex%3A1%3B%22%3E%E7%B4%A0%E6%9D%90%E6%89%B9%E9%87%8F%E4%B8%8B%E8%BD%BD%E5%8A%A9%E6%89%8B%20v4%3C%2Fspan%3E'%20%2B%20'%3Cbutton%20id%3D%22dl-min%22%20title%3D%22%E6%94%B6%E8%B5%B7%2F%E5%B1%95%E5%BC%80%22%20style%3D%22margin-left%3A6px%3Bbackground%3Atransparent%3Bborder%3A0%3Bcolor%3A%23fff%3Bcursor%3Apointer%3Bfont-size%3A14px%3B%22%3E%E2%80%94%3C%2Fbutton%3E'%20%2B%20'%3Cbutton%20id%3D%22dl-close%22%20title%3D%22%E5%85%B3%E9%97%AD%22%20style%3D%22margin-left%3A4px%3Bbackground%3Atransparent%3Bborder%3A0%3Bcolor%3A%23fff%3Bcursor%3Apointer%3Bfont-size%3A16px%3B%22%3E%C3%97%3C%2Fbutton%3E'%20%2B%20'%3C%2Fdiv%3E'%20%2B%20'%3Cdiv%20id%3D%22dl-main%22%3E'%20%2B%20'%3Cdiv%20style%3D%22padding%3A8px%2012px%3Bborder-bottom%3A1px%20solid%20%23eee%3B%22%3E'%20%2B%20'%3Ctextarea%20id%3D%22dl-names%22%20style%3D%22width%3A100%25%3Bheight%3A66px%3Bbox-sizing%3Aborder-box%3Bresize%3Avertical%3B%22%20placeholder%3D%22%E6%AF%8F%E8%A1%8C%E4%B8%80%E4%B8%AA%E5%89%A7%E5%90%8D%EF%BC%8C%E5%8F%AF%E6%89%B9%E9%87%8F%E7%B2%98%E8%B4%B4%22%3E%3C%2Ftextarea%3E'%20%2B%20'%3Cdiv%20style%3D%22margin-top%3A6px%3Bdisplay%3Aflex%3Balign-items%3Acenter%3Bflex-wrap%3Awrap%3Bgap%3A6px%3B%22%3E'%20%2B%20'%E6%AF%8F%E5%90%8D%E5%89%8D%20%3Cselect%20id%3D%22dl-count%22%3E%3Coption%3E5%3C%2Foption%3E%3Coption%20selected%3E10%3C%2Foption%3E%3Coption%3E20%3C%2Foption%3E%3C%2Fselect%3E%20%E4%B8%AA'%20%2B%20'%20%E7%AD%89%E5%BE%85%20%3Cselect%20id%3D%22dl-wait%22%3E%3Coption%3E15%3C%2Foption%3E%3Coption%20selected%3E30%3C%2Foption%3E%3Coption%3E45%3C%2Foption%3E%3Coption%3E60%3C%2Foption%3E%3C%2Fselect%3E%20%E7%A7%92'%20%2B%20'%20%E6%9C%80%E5%A4%9A%20%3Cselect%20id%3D%22dl-rounds%22%3E%3Coption%3E1%3C%2Foption%3E%3Coption%20selected%3E3%3C%2Foption%3E%3Coption%3E5%3C%2Foption%3E%3C%2Fselect%3E%20%E8%BD%AE'%20%2B%20'%20%E6%97%B6%E9%95%BF%20%3Cinput%20id%3D%22dl-durmin%22%20type%3D%22number%22%20style%3D%22width%3A52px%3B%22%20value%3D%22100%22%3E~%3Cinput%20id%3D%22dl-durmax%22%20type%3D%22number%22%20style%3D%22width%3A52px%3B%22%20value%3D%221000%22%3E%20%E7%A7%92'%20%2B%20'%3C%2Fdiv%3E'%20%2B%20'%3Cdiv%20style%3D%22margin-top%3A8px%3Bdisplay%3Aflex%3Bgap%3A6px%3Bflex-wrap%3Awrap%3B%22%3E'%20%2B%20'%3Cbutton%20id%3D%22dl-start%22%20style%3D%22padding%3A5px%2016px%3Bbackground%3A%232f6bff%3Bcolor%3A%23fff%3Bborder%3A0%3Bborder-radius%3A4px%3Bcursor%3Apointer%3B%22%3E%E5%BC%80%E5%A7%8B%3C%2Fbutton%3E'%20%2B%20'%3Cbutton%20id%3D%22dl-stop%22%20style%3D%22padding%3A5px%2016px%3Bbackground%3A%23d93025%3Bcolor%3A%23fff%3Bborder%3A0%3Bborder-radius%3A4px%3Bcursor%3Apointer%3B%22%3E%E5%81%9C%E6%AD%A2%3C%2Fbutton%3E'%20%2B%20'%3Cbutton%20id%3D%22dl-diag%22%20style%3D%22padding%3A5px%2014px%3Bbackground%3A%23fff%3Bcolor%3A%23333%3Bborder%3A1px%20solid%20%23c6c9cf%3Bborder-radius%3A4px%3Bcursor%3Apointer%3B%22%3E%E8%AF%8A%E6%96%AD%3C%2Fbutton%3E'%20%2B%20'%3Cbutton%20id%3D%22dl-clear%22%20style%3D%22padding%3A5px%2014px%3Bbackground%3A%23fff%3Bcolor%3A%23333%3Bborder%3A1px%20solid%20%23c6c9cf%3Bborder-radius%3A4px%3Bcursor%3Apointer%3B%22%3E%E6%B8%85%E7%A9%BA%E6%97%A5%E5%BF%97%3C%2Fbutton%3E'%20%2B%20'%3C%2Fdiv%3E%3C%2Fdiv%3E'%20%2B%20'%3Cdiv%20id%3D%22dl-log%22%20style%3D%22flex%3A1%3Boverflow%3Aauto%3Bpadding%3A8px%2012px%3Bmin-height%3A120px%3Bmax-height%3A48vh%3B%22%3E%3C%2Fdiv%3E'%20%2B%20'%3Cdiv%20style%3D%22padding%3A6px%2012px%3Bborder-top%3A1px%20solid%20%23eee%3Bcolor%3A%23999%3B%22%3E%E7%8A%B6%E6%80%81%EF%BC%9A%3Cspan%20id%3D%22dl-status%22%3E%E5%BE%85%E6%9C%BA%3C%2Fspan%3E%3C%2Fdiv%3E'%20%2B%20'%3C%2Fdiv%3E'%3B%20document.body.appendChild(panel)%3B%20%7D%20else%20%7B%20panel.style.display%20%3D%20'block'%3B%20%7D%20const%20mainBox%20%3D%20%24('%23dl-main'%2C%20panel)%3B%20const%20logbox%20%3D%20%24('%23dl-log'%2C%20panel)%3B%20const%20statusEl%20%3D%20%24('%23dl-status'%2C%20panel)%3B%20const%20setStatus%20%3D%20(t)%20%3D%3E%20%7B%20statusEl.textContent%20%3D%20t%3B%20%7D%3B%20const%20log%20%3D%20(msg%2C%20cls)%20%3D%3E%20%7B%20const%20d%20%3D%20document.createElement('div')%3B%20let%20color%20%3D%20'%23555'%3B%20if%20(cls%20%3D%3D%3D%20'ok')%20color%20%3D%20'%230a8f2b'%3B%20else%20if%20(cls%20%3D%3D%3D%20'err')%20color%20%3D%20'%23d93025'%3B%20else%20if%20(cls%20%3D%3D%3D%20'warn')%20color%20%3D%20'%23e37400'%3B%20d.style.cssText%20%3D%20'padding%3A2px%200%3Bcolor%3A'%20%2B%20color%20%2B%20'%3Bword-break%3Abreak-all%3B'%3B%20d.innerHTML%20%3D%20msg%3B%20logbox.appendChild(d)%3B%20logbox.scrollTop%20%3D%20logbox.scrollHeight%3B%20%7D%3B%20const%20head%20%3D%20%24('%23dl-head'%2C%20panel)%3B%20let%20dragging%20%3D%20false%2C%20ox%20%3D%200%2C%20oy%20%3D%200%3B%20head.addEventListener('mousedown'%2C%20(e)%20%3D%3E%20%7B%20if%20(e.target%20%26%26%20e.target.closest%20%26%26%20e.target.closest('button'))%20return%3B%20dragging%20%3D%20true%3B%20ox%20%3D%20e.clientX%20-%20panel.offsetLeft%3B%20oy%20%3D%20e.clientY%20-%20panel.offsetTop%3B%20e.preventDefault()%3B%20%7D)%3B%20document.addEventListener('mousemove'%2C%20(e)%20%3D%3E%20%7B%20if%20(!dragging)%20return%3B%20let%20x%20%3D%20e.clientX%20-%20ox%3B%20let%20y%20%3D%20e.clientY%20-%20oy%3B%20x%20%3D%20Math.max(0%2C%20Math.min(x%2C%20window.innerWidth%20-%20panel.offsetWidth))%3B%20y%20%3D%20Math.max(0%2C%20Math.min(y%2C%20window.innerHeight%20-%2030))%3B%20panel.style.left%20%3D%20x%20%2B%20'px'%3B%20panel.style.top%20%3D%20y%20%2B%20'px'%3B%20%7D)%3B%20document.addEventListener('mouseup'%2C%20()%20%3D%3E%20%7B%20dragging%20%3D%20false%3B%20%7D)%3B%20%24('%23dl-close'%2C%20panel).onclick%20%3D%20()%20%3D%3E%20%7B%20panel.style.display%20%3D%20'none'%3B%20%7D%3B%20%24('%23dl-min'%2C%20panel).onclick%20%3D%20()%20%3D%3E%20%7B%20const%20hidden%20%3D%20mainBox.style.display%20%3D%3D%3D%20'none'%3B%20mainBox.style.display%20%3D%20hidden%20%3F%20''%20%3A%20'none'%3B%20%24('%23dl-min'%2C%20panel).textContent%20%3D%20hidden%20%3F%20'%E2%80%94'%20%3A%20'%E2%96%A1'%3B%20%7D%3B%20const%20setSearch%20%3D%20(name)%20%3D%3E%20%7B%20const%20inp%20%3D%20%24(INP_SEL)%3B%20if%20(!inp)%20throw%20new%20Error('%E6%9C%AA%E6%89%BE%E5%88%B0%E6%90%9C%E7%B4%A2%E6%A1%86')%3B%20try%20%7B%20inp.scrollIntoView(%7B%20block%3A%20'center'%20%7D)%3B%20%7D%20catch%20(e)%20%7B%7D%20const%20setter%20%3D%20Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype%2C%20'value').set%3B%20setter.call(inp%2C%20name)%3B%20inp.dispatchEvent(new%20Event('input'%2C%20%7B%20bubbles%3A%20true%20%7D))%3B%20inp.dispatchEvent(new%20Event('change'%2C%20%7B%20bubbles%3A%20true%20%7D))%3B%20if%20(inp.value%20!%3D%3D%20name)%20%7B%20setter.call(inp%2C%20name)%3B%20inp.dispatchEvent(new%20Event('input'%2C%20%7B%20bubbles%3A%20true%20%7D))%3B%20%7D%20%7D%3B%20const%20clickQuery%20%3D%20()%20%3D%3E%20%7B%20const%20bs%20%3D%20%24%24('button')%3B%20let%20b%20%3D%20bs.find((x)%20%3D%3E%20(x.textContent%20%7C%7C%20'').trim()%20%3D%3D%3D%20'%E6%9F%A5%E8%AF%A2'%20%26%26%20%2F120px%2F.test(x.getAttribute('style')%20%7C%7C%20''))%3B%20if%20(!b)%20b%20%3D%20bs.find((x)%20%3D%3E%20(x.textContent%20%7C%7C%20'').trim()%20%3D%3D%3D%20'%E6%9F%A5%E8%AF%A2')%3B%20if%20(!b)%20throw%20new%20Error('%E6%9C%AA%E6%89%BE%E5%88%B0%E6%9F%A5%E8%AF%A2%E6%8C%89%E9%92%AE')%3B%20b.click()%3B%20%7D%3B%20const%20rowStatus%20%3D%20(row)%20%3D%3E%20%7B%20const%20t%20%3D%20%24('.el-tag'%2C%20row)%3B%20if%20(!t)%20return%20'unknown'%3B%20const%20txt%20%3D%20t.textContent.trim()%3B%20if%20(txt.indexOf('%E5%B7%B2%E5%8A%A0%E8%BD%BD')%20%3E%20-1)%20return%20'loaded'%3B%20if%20(txt.indexOf('%E6%9C%AA%E5%8A%A0%E8%BD%BD')%20%3E%20-1)%20return%20'notloaded'%3B%20return%20'unknown'%3B%20%7D%3B%20const%20clickDownload%20%3D%20async%20(row)%20%3D%3E%20%7B%20try%20%7B%20row.scrollIntoView(%7B%20block%3A%20'center'%20%7D)%3B%20%7D%20catch%20(e)%20%7B%7D%20await%20sleep(300)%3B%20const%20b%20%3D%20%24%24('button'%2C%20row).find((x)%20%3D%3E%20(x.textContent%20%7C%7C%20'').indexOf('%E4%B8%8B%E8%BD%BD')%20%3E%20-1)%3B%20if%20(!b)%20throw%20new%20Error('%E8%A1%8C%E5%86%85%E6%9C%AA%E6%89%BE%E5%88%B0%E4%B8%8B%E8%BD%BD%E6%8C%89%E9%92%AE')%3B%20b.click()%3B%20%7D%3B%20const%20scrollToBottom%20%3D%20()%20%3D%3E%20%7B%20window.scrollTo(0%2C%20document.body.scrollHeight)%3B%20%24%24('.el-table__body-wrapper').forEach((w)%20%3D%3E%20%7B%20w.scrollTop%20%3D%20w.scrollHeight%3B%20%7D)%3B%20%7D%3B%20const%20scrollToTop%20%3D%20()%20%3D%3E%20%7B%20window.scrollTo(0%2C%200)%3B%20%24%24('.el-table__body-wrapper').forEach((w)%20%3D%3E%20%7B%20w.scrollTop%20%3D%200%3B%20%7D)%3B%20%7D%3B%20const%20extractDuration%20%3D%20(row)%20%3D%3E%20%7B%20const%20m%20%3D%20(row.textContent%20%7C%7C%20'').match(%2F%E6%97%B6%E9%95%BF%5B%3A%EF%BC%9A%5D%5Cs*(%5Cd%2B)%5Cs*%E7%A7%92%2F)%3B%20return%20m%20%3F%20parseInt(m%5B1%5D%2C%2010)%20%3A%20null%3B%20%7D%3B%20const%20durOk%20%3D%20(dur)%20%3D%3E%20dur%20!%3D%3D%20null%20%26%26%20dur%20%3E%3D%20MIN_DUR%20%26%26%20dur%20%3C%3D%20MAX_DUR%3B%20const%20collectValid%20%3D%20async%20(limit)%20%3D%3E%20%7B%20const%20valid%20%3D%20%5B%5D%3B%20let%20prev%20%3D%20-1%2C%20same%20%3D%200%3B%20for%20(let%20i%20%3D%200%3B%20i%20%3C%2030%3B%20i%2B%2B)%20%7B%20const%20rows%20%3D%20%24%24(ROW_SEL)%3B%20for%20(const%20r%20of%20rows)%20%7B%20if%20(valid.length%20%3E%3D%20limit)%20break%3B%20if%20(valid.indexOf(r)%20%3E%20-1)%20continue%3B%20if%20(durOk(extractDuration(r)))%20valid.push(r)%3B%20%7D%20if%20(valid.length%20%3E%3D%20limit)%20break%3B%20const%20cur%20%3D%20rows.length%3B%20if%20(cur%20%3D%3D%3D%20prev)%20%7B%20same%2B%2B%3B%20if%20(same%20%3E%3D%204)%20break%3B%20%7D%20else%20same%20%3D%200%3B%20prev%20%3D%20cur%3B%20scrollToBottom()%3B%20await%20sleep(600)%3B%20%7D%20scrollToTop()%3B%20await%20sleep(300)%3B%20return%20valid%3B%20%7D%3B%20const%20waitResults%20%3D%20async%20()%20%3D%3E%20%7B%20await%20sleep(1200)%3B%20const%20t0%20%3D%20Date.now()%3B%20let%20last%20%3D%20-1%2C%20stable%20%3D%200%2C%20zero%20%3D%200%3B%20while%20(Date.now()%20-%20t0%20%3C%2015000)%20%7B%20const%20n%20%3D%20%24%24(ROW_SEL).length%3B%20if%20(n%20%3D%3D%3D%200)%20%7B%20zero%2B%2B%3B%20if%20(zero%20%3E%3D%2010)%20break%3B%20%7D%20else%20%7B%20zero%20%3D%200%3B%20if%20(n%20%3D%3D%3D%20last)%20%7B%20stable%2B%2B%3B%20if%20(stable%20%3E%3D%202)%20break%3B%20%7D%20else%20stable%20%3D%200%3B%20last%20%3D%20n%3B%20%7D%20await%20sleep(400)%3B%20%7D%20await%20sleep(800)%3B%20%7D%3B%20const%20diagnose%20%3D%20async%20()%20%3D%3E%20%7B%20log('%E2%80%94%E2%80%94%20%E8%AF%8A%E6%96%AD%E5%BC%80%E5%A7%8B%20%E2%80%94%E2%80%94'%2C%20'warn')%3B%20const%20rows0%20%3D%20%24%24(ROW_SEL)%3B%20log('%E2%91%A0%20.el-table__row%20%E6%95%B0%E9%87%8F%EF%BC%9A'%20%2B%20rows0.length%2C%20'info')%3B%20const%20alts%20%3D%20%5B'tbody%20tr'%2C%20'.el-table__body%20tr'%2C%20'.el-table%20tbody%20tr'%2C%20'.el-table__row'%5D%3B%20alts.forEach((s)%20%3D%3E%20%7B%20const%20n%20%3D%20%24%24(s).length%3B%20if%20(n%20%3E%200)%20log('%20%E5%A4%87%E9%80%89%E9%80%89%E6%8B%A9%E5%99%A8%20'%20%2B%20s%20%2B%20'%20%E2%86%92%20'%20%2B%20n%20%2B%20'%20%E4%B8%AA'%2C%20'info')%3B%20%7D)%3B%20log('%E2%91%A1%20window%3A%20%E5%8F%AF%E8%A7%86%E9%AB%98%20'%20%2B%20window.innerHeight%20%2B%20'%EF%BC%8C%E9%A1%B5%E9%9D%A2%E6%80%BB%E9%AB%98%20'%20%2B%20document.body.scrollHeight%20%2B%20'%EF%BC%8C%E5%B7%B2%E6%BB%9A%20'%20%2B%20window.pageYOffset%2C%20'info')%3B%20const%20boxes%20%3D%20%24%24('.el-table__body-wrapper')%3B%20boxes.forEach((w%2C%20i)%20%3D%3E%20%7B%20log('%20%E8%A1%A8%E6%A0%BC%E6%BB%9A%E5%8A%A8%E5%AE%B9%E5%99%A8'%20%2B%20i%20%2B%20'%3A%20clientHeight%3D'%20%2B%20w.clientHeight%20%2B%20'%20scrollHeight%3D'%20%2B%20w.scrollHeight%20%2B%20'%20scrollTop%3D'%20%2B%20w.scrollTop%2C%20'info')%3B%20%7D)%3B%20log('%E2%91%A2%20%E5%89%8D%2012%20%E8%A1%8C%E7%8A%B6%E6%80%81%EF%BC%88DOM%20%E9%87%8C%E7%9A%84%EF%BC%89%EF%BC%9A'%2C%20'info')%3B%20rows0.slice(0%2C%2012).forEach((r%2C%20i)%20%3D%3E%20%7B%20const%20st%20%3D%20rowStatus(r)%3B%20const%20dur%20%3D%20extractDuration(r)%3B%20const%20txt%20%3D%20(r.textContent%20%7C%7C%20'').trim().replace(%2F%5Cs%2B%2Fg%2C%20'%20').slice(0%2C%2045)%3B%20log('%20%E8%A1%8C'%20%2B%20i%20%2B%20'%20%5B'%20%2B%20st%20%2B%20'%5D%20%E6%97%B6%E9%95%BF'%20%2B%20(dur%20%3D%3D%3D%20null%20%3F%20'%3F'%20%3A%20dur)%20%2B%20'%E7%A7%92%20'%20%2B%20txt%2C%20st%20%3D%3D%3D%20'loaded'%20%3F%20'ok'%20%3A%20(st%20%3D%3D%3D%20'notloaded'%20%3F%20'err'%20%3A%20'info'))%3B%20%7D)%3B%20log('%E2%91%A3%20%E6%BB%9A%E5%8A%A8%E6%B5%8B%E8%AF%95%EF%BC%9A%E6%BB%9A%E5%88%B0%E5%BA%95%E9%83%A8%E5%90%8E%E8%A1%8C%E6%95%B0%E5%8F%98%E5%8C%96%EF%BC%88%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E8%99%9A%E6%8B%9F%E6%BB%9A%E5%8A%A8%2F%E6%87%92%E5%8A%A0%E8%BD%BD%EF%BC%89...'%2C%20'warn')%3B%20const%20before%20%3D%20%24%24(ROW_SEL).length%3B%20scrollToBottom()%3B%20await%20sleep(1500)%3B%20const%20after%20%3D%20%24%24(ROW_SEL).length%3B%20log('%20%E6%BB%9A%E5%8A%A8%E5%89%8D%20'%20%2B%20before%20%2B%20'%20%E2%86%92%20%E6%BB%9A%E5%8A%A8%E5%90%8E%20'%20%2B%20after%2C%20after%20%3E%20before%20%3F%20'ok'%20%3A%20'info')%3B%20scrollToTop()%3B%20await%20sleep(800)%3B%20const%20topN%20%3D%20%24%24(ROW_SEL).length%3B%20log('%20%E5%9B%9E%E5%88%B0%E9%A1%B6%E9%83%A8%E5%90%8E%20DOM%20%E8%A1%8C%E6%95%B0%EF%BC%9A'%20%2B%20topN%2C%20topN%20%3E%3D%20COUNT%20%3F%20'ok'%20%3A%20'err')%3B%20log('%E2%80%94%E2%80%94%20%E8%AF%8A%E6%96%AD%E7%BB%93%E6%9D%9F%EF%BC%88%E6%8A%8A%E4%BB%A5%E4%B8%8A%E5%86%85%E5%AE%B9%E8%B4%B4%E7%BB%99%E5%8A%A9%E6%89%8B%EF%BC%89%E2%80%94%E2%80%94'%2C%20'warn')%3B%20%7D%3B%20const%20processOne%20%3D%20async%20(name)%20%3D%3E%20%7B%20setSearch(name)%3B%20await%20sleep(300)%3B%20clickQuery()%3B%20await%20waitResults()%3B%20let%20targets%20%3D%20await%20collectValid(COUNT)%3B%20if%20(targets.length%20%3D%3D%3D%200)%20%7B%20log('%C3%97%20%E6%9C%AA%E6%89%BE%E5%88%B0%E3%80%8C'%20%2B%20name%20%2B%20'%E3%80%8D%E7%9A%84%E5%90%88%E6%A0%BC%E7%B4%A0%E6%9D%90%EF%BC%88%E6%97%B6%E9%95%BF%20'%20%2B%20MIN_DUR%20%2B%20'~'%20%2B%20MAX_DUR%20%2B%20'%20%E7%A7%92%EF%BC%89'%2C%20'err')%3B%20return%3B%20%7D%20log('%E2%96%B6%20%E6%89%AB%E6%8F%8F%E5%BE%97%E5%88%B0%20'%20%2B%20targets.length%20%2B%20'%20%E4%B8%AA%E5%90%88%E6%A0%BC%E7%B4%A0%E6%9D%90%EF%BC%88%E6%97%B6%E9%95%BF%20'%20%2B%20MIN_DUR%20%2B%20'~'%20%2B%20MAX_DUR%20%2B%20'%20%E7%A7%92%EF%BC%89'%2C%20'info')%3B%20if%20(targets.length%20%3C%20COUNT)%20log('%E2%9A%A0%20%E5%90%88%E6%A0%BC%E7%B4%A0%E6%9D%90%E4%B8%8D%E8%B6%B3%20'%20%2B%20COUNT%20%2B%20'%20%E4%B8%AA%EF%BC%8C%E6%8C%89%20'%20%2B%20targets.length%20%2B%20'%20%E4%B8%AA%E5%A4%84%E7%90%86'%2C%20'warn')%3B%20let%20allLoaded%20%3D%20false%3B%20for%20(let%20rnd%20%3D%201%3B%20rnd%20%3C%3D%20MAX_ROUNDS%3B%20rnd%2B%2B)%20%7B%20await%20stopIfNeeded()%3B%20targets%20%3D%20await%20collectValid(COUNT)%3B%20const%20bad%20%3D%20targets.filter((r)%20%3D%3E%20rowStatus(r)%20%3D%3D%3D%20'notloaded')%3B%20if%20(bad.length%20%3D%3D%3D%200)%20%7B%20allLoaded%20%3D%20true%3B%20log('%E2%88%9A%20'%20%2B%20targets.length%20%2B%20'%20%E4%B8%AA%E5%90%88%E6%A0%BC%E7%B4%A0%E6%9D%90%E5%B7%B2%E5%85%A8%E9%83%A8%E5%8A%A0%E8%BD%BD'%2C%20'ok')%3B%20break%3B%20%7D%20log('%E7%AC%AC%20'%20%2B%20rnd%20%2B%20'%20%E8%BD%AE%EF%BC%9A'%20%2B%20bad.length%20%2B%20'%20%E4%B8%AA%E6%9C%AA%E5%8A%A0%E8%BD%BD%EF%BC%8C%E7%82%B9%E5%87%BB%E4%B8%8B%E8%BD%BD%E8%A7%A6%E5%8F%91%E5%8A%A0%E8%BD%BD%EF%BC%8C%E7%AD%89%E5%BE%85%20'%20%2B%20Math.round(WAIT_MS%20%2F%201000)%20%2B%20'%20%E7%A7%92...'%2C%20'warn')%3B%20for%20(const%20r%20of%20bad)%20%7B%20try%20%7B%20await%20clickDownload(r)%3B%20%7D%20catch%20(e)%20%7B%7D%20await%20sleep(LOAD_GAP)%3B%20await%20stopIfNeeded()%3B%20%7D%20await%20sleep(WAIT_MS)%3B%20clickQuery()%3B%20await%20waitResults()%3B%20%7D%20if%20(!allLoaded)%20log('%C3%97%20%E5%B7%B2%E8%BE%BE%E6%9C%80%E5%A4%A7%E8%BD%AE%E6%AC%A1%EF%BC%8C%E4%BB%8D%E6%9C%89%E6%9C%AA%E5%8A%A0%E8%BD%BD'%2C%20'err')%3B%20targets%20%3D%20await%20collectValid(COUNT)%3B%20const%20ok%20%3D%20targets.filter((r)%20%3D%3E%20rowStatus(r)%20%3D%3D%3D%20'loaded')%3B%20const%20fail%20%3D%20targets.filter((r)%20%3D%3E%20rowStatus(r)%20!%3D%3D%20'loaded')%3B%20for%20(const%20r%20of%20ok)%20%7B%20try%20%7B%20await%20clickDownload(r)%3B%20%7D%20catch%20(e)%20%7B%20log('%C3%97%20%E7%82%B9%E5%87%BB%E4%B8%8B%E8%BD%BD%E5%A4%B1%E8%B4%A5'%2C%20'err')%3B%20%7D%20await%20sleep(DOWNLOAD_GAP)%3B%20await%20stopIfNeeded()%3B%20%7D%20log('%E2%88%9A%20%E4%B8%8B%E8%BD%BD%E5%AE%8C%E6%88%90%EF%BC%9A'%20%2B%20ok.length%20%2B%20'%2F'%20%2B%20targets.length%20%2B%20(fail.length%20%3F%20'%EF%BC%88'%20%2B%20fail.length%20%2B%20'%20%E4%B8%AA%E6%9C%AA%E5%8A%A0%E8%BD%BD%2F%E4%B8%8D%E5%90%88%E6%A0%BC%E8%B7%B3%E8%BF%87%EF%BC%89'%20%3A%20'')%2C%20'ok')%3B%20%7D%3B%20const%20main%20%3D%20async%20()%20%3D%3E%20%7B%20STOPPED%20%3D%20false%3B%20const%20names%20%3D%20%24('%23dl-names'%2C%20panel).value.split(%2F%5B%5Cr%5Cn%5D%2B%2F).map((s)%20%3D%3E%20s.trim()).filter(Boolean)%3B%20if%20(!names.length)%20%7B%20log('%C3%97%20%E8%AF%B7%E5%85%88%E8%BE%93%E5%85%A5%E5%90%8D%E5%AD%97'%2C%20'err')%3B%20return%3B%20%7D%20COUNT%20%3D%20parseInt(%24('%23dl-count'%2C%20panel).value%2C%2010)%20%7C%7C%2010%3B%20WAIT_MS%20%3D%20(parseInt(%24('%23dl-wait'%2C%20panel).value%2C%2010)%20%7C%7C%2030)%20*%201000%3B%20MAX_ROUNDS%20%3D%20parseInt(%24('%23dl-rounds'%2C%20panel).value%2C%2010)%20%7C%7C%203%3B%20MIN_DUR%20%3D%20parseInt(%24('%23dl-durmin'%2C%20panel).value%2C%2010)%3B%20MAX_DUR%20%3D%20parseInt(%24('%23dl-durmax'%2C%20panel).value%2C%2010)%3B%20if%20(!(MIN_DUR%20%3E%3D%200))%20MIN_DUR%20%3D%20100%3B%20if%20(!(MAX_DUR%20%3E%20MIN_DUR))%20MAX_DUR%20%3D%201000%3B%20log('%E5%BC%80%E5%A7%8B%E6%89%B9%E9%87%8F%E5%A4%84%E7%90%86%EF%BC%8C%E5%85%B1%20'%20%2B%20names.length%20%2B%20'%20%E4%B8%AA%E5%90%8D%E5%AD%97%EF%BC%88%E6%97%B6%E9%95%BF%E8%BF%87%E6%BB%A4%20'%20%2B%20MIN_DUR%20%2B%20'~'%20%2B%20MAX_DUR%20%2B%20'%20%E7%A7%92%EF%BC%89'%2C%20'info')%3B%20for%20(let%20i%20%3D%200%3B%20i%20%3C%20names.length%3B%20i%2B%2B)%20%7B%20if%20(STOPPED)%20%7B%20log('%E5%B7%B2%E5%81%9C%E6%AD%A2%EF%BC%8C%E5%89%A9%E4%BD%99%E5%90%8D%E5%AD%97%E6%9C%AA%E5%A4%84%E7%90%86'%2C%20'err')%3B%20break%3B%20%7D%20setStatus('%E5%A4%84%E7%90%86%E4%B8%AD%20'%20%2B%20(i%20%2B%201)%20%2B%20'%2F'%20%2B%20names.length%20%2B%20'%EF%BC%9A'%20%2B%20names%5Bi%5D)%3B%20log('%E2%95%90%E2%95%90%E2%95%90%E2%95%90%20%5B'%20%2B%20(i%20%2B%201)%20%2B%20'%2F'%20%2B%20names.length%20%2B%20'%5D%20'%20%2B%20names%5Bi%5D%20%2B%20'%20%E2%95%90%E2%95%90%E2%95%90%E2%95%90'%2C%20'info')%3B%20try%20%7B%20await%20processOne(names%5Bi%5D)%3B%20%7D%20catch%20(e)%20%7B%20log('%C3%97%20%E5%A4%84%E7%90%86%E5%A4%B1%E8%B4%A5%EF%BC%9A'%20%2B%20(e%20%26%26%20e.message%20%7C%7C%20e)%2C%20'err')%3B%20%7D%20%7D%20setStatus('%E5%85%A8%E9%83%A8%E5%AE%8C%E6%88%90')%3B%20log('%E2%88%9A%20%E5%85%A8%E9%83%A8%E5%A4%84%E7%90%86%E5%AE%8C%E6%88%90'%2C%20'ok')%3B%20%7D%3B%20%24('%23dl-start'%2C%20panel).onclick%20%3D%20main%3B%20%24('%23dl-stop'%2C%20panel).onclick%20%3D%20()%20%3D%3E%20%7B%20STOPPED%20%3D%20true%3B%20log('%E5%B7%B2%E8%AF%B7%E6%B1%82%E5%81%9C%E6%AD%A2%EF%BC%88%E5%BD%93%E5%89%8D%E6%AD%A5%E9%AA%A4%E5%AE%8C%E6%88%90%E5%90%8E%E5%81%9C%E6%AD%A2%EF%BC%89'%2C%20'warn')%3B%20%7D%3B%20%24('%23dl-diag'%2C%20panel).onclick%20%3D%20()%20%3D%3E%20%7B%20diagnose()%3B%20%7D%3B%20%24('%23dl-clear'%2C%20panel).onclick%20%3D%20()%20%3D%3E%20%7B%20logbox.innerHTML%20%3D%20''%3B%20%7D%3B%20log('%E9%9D%A2%E6%9D%BF%E5%B7%B2%E5%B0%B1%E7%BB%AA%20v4%EF%BC%9A%E5%8F%AF%E6%8B%96%E5%8A%A8%2F%E5%85%B3%E9%97%AD%2F%E6%94%B6%E8%B5%B7%2F%E5%81%9C%E6%AD%A2%EF%BC%9B%E6%8C%89%E6%97%B6%E9%95%BF%20'%20%2B%20MIN_DUR%20%2B%20'~'%20%2B%20MAX_DUR%20%2B%20'%20%E7%A7%92%E8%BF%87%E6%BB%A4%E5%87%91%E6%BB%A1%20'%20%2B%20COUNT%20%2B%20'%20%E4%B8%AA%E3%80%82'%2C%20'info')%3B%20%7D)()%3B';
+  document.getElementById('bmk').setAttribute('href', LINK);
+  document.getElementById('copyBtn').onclick = function(){
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(LINK).then(function(){
+        document.getElementById('copyTip').textContent = '已复制，去新建书签粘贴即可';
+      });
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = LINK; document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
+      document.getElementById('copyTip').textContent = '已复制，去新建书签粘贴即可';
+    }
+  };
+</script>
+</body>
+</html>

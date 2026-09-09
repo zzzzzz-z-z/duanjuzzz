@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>书签代码转换工具</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+    background: #f5f7fa;
+    color: #2b2b2b;
+    padding: 24px 16px 60px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  h1 { font-size: 22px; margin-bottom: 6px; }
+  .sub { color: #888; font-size: 13px; margin-bottom: 20px; line-height: 1.7; }
+  .card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+  }
+  .card h2 { font-size: 15px; margin-bottom: 10px; color: #333; }
+  textarea {
+    width: 100%;
+    min-height: 200px;
+    border: 1px solid #d5dbe3;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 13px;
+    line-height: 1.6;
+    resize: vertical;
+    font-family: Consolas, "Microsoft YaHei", monospace;
+    background: #fafbfc;
+  }
+  textarea:focus { outline: none; border-color: #1976d2; }
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  button {
+    border: none;
+    border-radius: 6px;
+    padding: 8px 18px;
+    font-size: 14px;
+    cursor: pointer;
+    background: #1976d2;
+    color: #fff;
+  }
+  button:hover { opacity: .9; }
+  button.secondary { background: #eceff1; color: #455a64; }
+  button.green { background: #2e7d32; }
+  .stats { font-size: 13px; color: #2e7d32; margin-top: 10px; min-height: 18px; }
+  .stats.err { color: #d32f2f; }
+  .tip {
+    font-size: 12.5px; color: #666; line-height: 1.9;
+    background: #fafbfc; border: 1px solid #e3e8ee; border-radius: 8px;
+    padding: 12px 14px;
+  }
+  .tip b { color: #333; }
+  code {
+    background: #fff; border: 1px solid #e3e8ee; border-radius: 4px;
+    padding: 1px 5px; font-size: 12px; font-family: Consolas, monospace;
+  }
+</style>
+
+<script src="_skin.js" data-tool="书签代码转换工具" data-kind="plain"></script>
+</head>
+<body>
+  <h1>📜 书签代码转换工具</h1>
+  <div class="sub">双向转换：<b>乱码 → 代码</b> 还原成可读的 JS，或 <b>代码 → 乱码</b> 生成可直接粘贴进书签的 <code>javascript:</code> 链接。完全在本地运行。</div>
+
+  <div class="card">
+    <h2>① 粘贴内容</h2>
+    <textarea id="in" placeholder="粘贴 javascript:(function()%7B...%7D)()%3B 乱码，或 (function(){...})(); 正常代码"></textarea>
+    <div class="controls">
+      <button id="btnDecode">🔄 乱码 → 代码</button>
+      <button class="green" id="btnEncode">🔁 代码 → 乱码</button>
+      <button class="secondary" id="btnSwap">⇅ 互换上下</button>
+      <button class="secondary" id="btnClear">清空</button>
+    </div>
+    <div class="stats" id="status"></div>
+  </div>
+
+  <div class="card">
+    <h2>② 转换结果</h2>
+    <textarea id="out" placeholder="转换结果会显示在这里…"></textarea>
+    <div class="controls">
+      <button class="green" id="btnCopy">📋 复制结果</button>
+    </div>
+  </div>
+
+  <div class="tip">
+    <b>怎么用：</b><br>
+    1. <b>乱码 → 代码</b>：把浏览器里复制的那段 <code>javascript:(function()%7B...%7D)()%3B</code> 粘进上方，点【乱码 → 代码】，得到正常 JS 代码。<br>
+    2. <b>代码 → 乱码</b>：把 <code>(function(){...})();</code> 正常代码粘进上方，点【代码 → 乱码】，得到可直接粘贴进浏览器书签地址栏的 <code>javascript:</code> 链接。<br>
+    3. 自动识别：粘贴内容带 <code>%</code> 编码时点【乱码 → 代码】；纯 JS 代码时点【代码 → 乱码】。<br>
+    4. 【⇅ 互换上下】把结果放回输入框继续改，方便反复转换。<br>
+    <b>注意：</b>本工具完全在本地运行，代码不会上传到任何地方，离线也能用。
+  </div>
+
+<script>
+(function(){
+  var inEl = document.getElementById('in');
+  var outEl = document.getElementById('out');
+  var statusEl = document.getElementById('status');
+
+  function setStatus(html, isErr){
+    statusEl.innerHTML = html;
+    statusEl.className = 'stats' + (isErr ? ' err' : '');
+  }
+  function esc(s){
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+  function copyText(text){
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function(){
+        setStatus('✅ 已复制到剪贴板');
+      }, function(){ fallbackCopy(text); });
+    } else { fallbackCopy(text); }
+  }
+  function fallbackCopy(text){
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.left = '-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand('copy');
+      setStatus('✅ 已复制到剪贴板');
+    } catch(e) {
+      setStatus('❌ 复制失败，请手动 Ctrl+C', true);
+    }
+    document.body.removeChild(ta);
+  }
+
+  // 去掉 javascript: 前缀和开头残留符号
+  function stripPrefix(s){
+    if (s.indexOf('javascript:') === 0) s = s.slice('javascript:'.length);
+    return s.replace(/^\s*;?\s*/, '');
+  }
+
+  // 乱码 → 代码
+  document.getElementById('btnDecode').addEventListener('click', function(){
+    var raw = inEl.value.trim();
+    if (!raw) { setStatus('⚠ 请先粘贴内容', true); return; }
+    var s = stripPrefix(raw);
+    try {
+      var decoded = decodeURIComponent(s);
+      outEl.value = decoded;
+      var first = decoded.substring(0, 60);
+      setStatus('✅ 解码成功！共 <b>' + decoded.length + '</b> 字符，开头：<code>' + esc(first) + '…</code>');
+    } catch(e) {
+      setStatus('❌ 解码失败：' + esc(e.message) + '（内容可能已经是正常代码，试试【代码 → 乱码】）', true);
+      outEl.value = raw;
+    }
+  });
+
+  // 代码 → 乱码
+  document.getElementById('btnEncode').addEventListener('click', function(){
+    var raw = inEl.value.trim();
+    if (!raw) { setStatus('⚠ 请先粘贴内容', true); return; }
+    var s = stripPrefix(raw);
+    // 如果带 % 且能解码，多半是乱码，提醒用户用错方向
+    if (s.indexOf('%') !== -1) {
+      try {
+        var test = decodeURIComponent(s);
+        if (test.indexOf('%') === -1) {
+          setStatus('⚠ 这看起来已经是编码后的乱码，应该用【乱码 → 代码】', true);
+          return;
+        }
+      } catch(e){ /* 解码失败说明不是标准编码，继续走编码 */ }
+    }
+    var encoded = 'javascript:' + encodeURIComponent(s);
+    outEl.value = encoded;
+    var first = encoded.substring(0, 60);
+    setStatus('✅ 编码成功！共 <b>' + encoded.length + '</b> 字符，开头：<code>' + esc(first) + '…</code>');
+  });
+
+  // 互换上下
+  document.getElementById('btnSwap').addEventListener('click', function(){
+    var tmp = inEl.value;
+    inEl.value = outEl.value;
+    outEl.value = tmp;
+    setStatus('⇅ 已互换，可继续转换');
+  });
+
+  // 清空
+  document.getElementById('btnClear').addEventListener('click', function(){
+    inEl.value = '';
+    outEl.value = '';
+    setStatus('');
+    inEl.focus();
+  });
+
+  // 复制
+  document.getElementById('btnCopy').addEventListener('click', function(){
+    if (!outEl.value.trim()) { setStatus('⚠ 没有可复制的内容', true); return; }
+    copyText(outEl.value);
+  });
+})();
+</script>
+</body>
+</html>

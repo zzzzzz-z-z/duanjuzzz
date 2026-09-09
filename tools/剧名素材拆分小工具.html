@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>剧名 / 素材 拆分小工具</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+    background: #f5f7fa;
+    color: #2b2b2b;
+    padding: 24px 16px 60px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  h1 { font-size: 22px; margin-bottom: 6px; }
+  .sub { color: #888; font-size: 13px; margin-bottom: 20px; }
+  .card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+  }
+  .card h2 { font-size: 15px; margin-bottom: 10px; color: #333; }
+  textarea {
+    width: 100%;
+    min-height: 180px;
+    border: 1px solid #d5dbe3;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 14px;
+    line-height: 1.6;
+    resize: vertical;
+    font-family: Consolas, "Microsoft YaHei", monospace;
+  }
+  textarea:focus { outline: none; border-color: #1976d2; }
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .controls label { font-size: 13px; color: #555; }
+  .controls label.ck { display: inline-flex; align-items: center; gap: 4px; cursor: pointer; }
+  .controls input[type=text] {
+    width: 110px;
+    padding: 6px 8px;
+    border: 1px solid #d5dbe3;
+    border-radius: 6px;
+    font-size: 14px;
+  }
+  .controls input[type=checkbox] { width: auto; cursor: pointer; }
+  button {
+    border: none;
+    border-radius: 6px;
+    padding: 8px 18px;
+    font-size: 14px;
+    cursor: pointer;
+    background: #1976d2;
+    color: #fff;
+  }
+  button:hover { opacity: .9; }
+  button.secondary { background: #eceff1; color: #455a64; }
+  button.green { background: #2e7d32; }
+  .stats { font-size: 13px; color: #2e7d32; margin-top: 10px; }
+  .stats b { font-size: 15px; }
+  .group {
+    border: 1px solid #e3e8ee;
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+  }
+  .group .ghead { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+  .group .gtitle { font-weight: bold; color: #455a64; font-size: 13px; }
+  .tag { display: inline-block; font-size: 12px; padding: 1px 8px; border-radius: 10px; margin-right: 6px; }
+  .tag.jm { background: #e3f2fd; color: #1565c0; }
+  .tag.sc { background: #e8f5e9; color: #2e7d32; }
+  .group .line { font-size: 13px; line-height: 1.8; word-break: break-all; }
+  .group .line.jm-l { color: #1565c0; }
+  .group .line.sc-l { color: #2e7d32; }
+  .group button.mini { background: #eceff1; color: #455a64; padding: 3px 10px; font-size: 12px; border-radius: 5px; }
+  .copy-area {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .copy-box { flex: 1; min-width: 300px; }
+  .copy-box .head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+  .copy-box .head span { font-weight: bold; font-size: 14px; }
+  .copy-box textarea { min-height: 120px; background: #fafbfc; }
+  .tip { font-size: 12px; color: #999; margin-top: 4px; }
+  .empty-hint { color: #bbb; font-size: 13px; }
+  .toast {
+    position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+    background: #323232; color: #fff; padding: 10px 22px; border-radius: 6px;
+    font-size: 13px; opacity: 0; transition: opacity .25s; pointer-events: none; z-index: 99;
+  }
+  .toast.show { opacity: 1; }
+</style>
+
+<script src="_skin.js" data-tool="剧名素材拆分小工具" data-kind="plain"></script>
+</head>
+<body>
+  <h1>剧名 / 素材 拆分小工具</h1>
+  <div class="sub">把多行文本粘贴进来：含「衍生」、「-」或「_」的行算 <b style="color:#2e7d32">素材</b>，都不含的算 <b style="color:#1565c0">剧名</b>（判断符号可用逗号/竖线填多个）；每组之间用空行分隔。输出时不同剧之间用空行隔开，便于整块复制。</div>
+
+  <div class="card">
+    <h2>① 粘贴输入</h2>
+    <textarea id="input" placeholder="例如：&#10;干啥呢心肝颤：双宝助攻复婚记_1294127519-衍生-衍生3&#10;终得温柔圆满&#10;&#10;阿芜许你余生，辰与若楠_1292513403_like-衍生-衍生17&#10;此世共赴良辰"></textarea>
+    <div class="controls">
+      <label>关键词：</label>
+      <input type="text" id="keyword" value="衍生,-,_">
+      <label class="ck"><input type="checkbox" id="dedup" checked> 去重（完全相同只留一条）</label>
+      <button id="btnGo">开始拆分</button>
+      <button class="secondary" id="btnClear">清空</button>
+    </div>
+    <div class="stats" id="stats"></div>
+  </div>
+
+  <div class="card" id="groupCard" style="display:none;">
+    <h2>② 分组预览（核对用）</h2>
+    <div id="groups"></div>
+  </div>
+
+  <div class="card" id="copyCard" style="display:none;">
+    <h2>③ 复制结果</h2>
+    <div class="copy-area">
+      <div class="copy-box">
+        <div class="head"><span style="color:#1565c0">剧名</span><button class="green" id="copyJm">复制剧名</button></div>
+        <textarea id="outJm" readonly placeholder="剧名列表将显示在这里"></textarea>
+      </div>
+      <div class="copy-box">
+        <div class="head"><span style="color:#2e7d32">素材</span><button class="green" id="copySc">复制素材</button></div>
+        <textarea id="outSc" readonly placeholder="素材列表将显示在这里"></textarea>
+      </div>
+    </div>
+    <div class="tip">剧名一行一条、素材一行一条，不同剧之间自动空一行；直接复制即可粘贴到别处。</div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  var inputEl = document.getElementById('input');
+  var keywordEl = document.getElementById('keyword');
+  var dedupEl = document.getElementById('dedup');
+  var groupsEl = document.getElementById('groups');
+  var statsEl = document.getElementById('stats');
+  var groupCard = document.getElementById('groupCard');
+  var copyCard = document.getElementById('copyCard');
+  var outJm = document.getElementById('outJm');
+  var outSc = document.getElementById('outSc');
+  var toastEl = document.getElementById('toast');
+
+  function showToast(msg){
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    setTimeout(function(){ toastEl.classList.remove('show'); }, 1600);
+  }
+
+  function copyText(text){
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function(){
+        showToast('已复制到剪贴板');
+      }, function(){
+        fallbackCopy(text);
+      });
+    } else {
+      fallbackCopy(text);
+    }
+  }
+
+  function fallbackCopy(text){
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.left = '-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand('copy');
+      showToast('已复制到剪贴板');
+    } catch(e) {
+      showToast('复制失败，请手动选择复制');
+    }
+    document.body.removeChild(ta);
+  }
+
+  function esc(s){
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  // 多个判断符号：用逗号/竖线分隔，行内容命中任意一个即算素材
+  function isSucai(line, markers){
+    for (var i = 0; i < markers.length; i++) {
+      if (line.indexOf(markers[i]) >= 0) return true;
+    }
+    return false;
+  }
+
+  function parse(text, keyword){
+    var markers = keyword.split(/[,，|]/).map(function(s){ return s.trim(); }).filter(function(s){ return s !== ''; });
+    if (markers.length === 0) markers = ['-'];
+    var raw = text.split(/\r?\n/);
+    var groups = [];
+    var current = null;
+    for (var i = 0; i < raw.length; i++) {
+      var t = raw[i].trim();
+      if (t === '') {
+        if (current && (current.jm.length + current.sc.length > 0)) {
+          groups.push(current);
+          current = null;
+        }
+        continue;
+      }
+      if (!current) current = { jm: [], sc: [] };
+      if (isSucai(t, markers)) {
+        current.sc.push(t);
+      } else {
+        current.jm.push(t);
+      }
+    }
+    if (current && (current.jm.length + current.sc.length > 0)) groups.push(current);
+    return groups;
+  }
+
+  function renderGroups(groups){
+    if (groups.length === 0) {
+      groupsEl.innerHTML = '<div class="empty-hint">未识别到内容，请检查输入。</div>';
+      return;
+    }
+    var html = '';
+    for (var i = 0; i < groups.length; i++) {
+      var g = groups[i];
+      html += '<div class="group">';
+      html += '<div class="ghead"><span class="gtitle">第 ' + (i+1) + ' 组（' + (g.sc.length + g.jm.length) + ' 行）</span>'
+           + '<button class="mini" data-idx="' + i + '">复制本组</button></div>';
+      if (g.jm.length === 0) {
+        html += '<div class="line sc-l"><span class="tag sc">素材</span>（本组无剧名）</div>';
+      }
+      for (var j = 0; j < g.jm.length; j++) {
+        html += '<div class="line jm-l"><span class="tag jm">剧名</span>' + esc(g.jm[j]) + '</div>';
+      }
+      for (var k = 0; k < g.sc.length; k++) {
+        html += '<div class="line sc-l"><span class="tag sc">素材</span>' + esc(g.sc[k]) + '</div>';
+      }
+      html += '</div>';
+    }
+    groupsEl.innerHTML = html;
+
+    var btns = groupsEl.querySelectorAll('button.mini');
+    for (var b = 0; b < btns.length; b++) {
+      btns[b].addEventListener('click', function(){
+        var idx = parseInt(this.getAttribute('data-idx'), 10);
+        var g = groups[idx];
+        var arr = [];
+        for (var m = 0; m < g.jm.length; m++) arr.push(g.jm[m]);
+        for (var n = 0; n < g.sc.length; n++) arr.push(g.sc[n]);
+        copyText(arr.join('\n'));
+      });
+    }
+  }
+
+  // 去重：完全相同的行只保留第一条，保持顺序
+  function dedup(arr){
+    var seen = {}, out = [];
+    for (var i = 0; i < arr.length; i++) {
+      if (!seen[arr[i]]) { seen[arr[i]] = true; out.push(arr[i]); }
+    }
+    return out;
+  }
+
+  function run(){
+    var text = inputEl.value;
+    var keyword = keywordEl.value.trim() || '衍生,-,_';
+    var groups = parse(text, keyword);
+
+    // 去重：勾选时，每组内完全相同的剧名/素材只保留一条
+    var removed = 0;
+    if (dedupEl.checked) {
+      for (var i = 0; i < groups.length; i++) {
+        var bSc = groups[i].sc.length, bJm = groups[i].jm.length;
+        groups[i].sc = dedup(groups[i].sc);
+        groups[i].jm = dedup(groups[i].jm);
+        removed += (bSc - groups[i].sc.length) + (bJm - groups[i].jm.length);
+      }
+    }
+
+    // 按组拼接：组内一行一条，不同剧之间空一行
+    var jmBlocks = [], scBlocks = [];
+    var jmCount = 0, scCount = 0;
+    for (var i = 0; i < groups.length; i++) {
+      jmCount += groups[i].jm.length;
+      scCount += groups[i].sc.length;
+      if (groups[i].jm.length > 0) jmBlocks.push(groups[i].jm.join('\n'));
+      if (groups[i].sc.length > 0) scBlocks.push(groups[i].sc.join('\n'));
+    }
+
+    outJm.value = jmBlocks.join('\n\n');
+    outSc.value = scBlocks.join('\n\n');
+    renderGroups(groups);
+
+    if (groups.length > 0) {
+      groupCard.style.display = '';
+      copyCard.style.display = '';
+      statsEl.innerHTML = '共 <b>' + groups.length + '</b> 组 ｜ 剧名 <b>' + jmCount + '</b> 条 ｜ 素材 <b>' + scCount + '</b> 条'
+        + (removed > 0 ? ' ｜ 去重 <b>' + removed + '</b> 条' : '')
+        + (groups.length > 1 ? '' : '（未用空行分隔时，全部算作一组）');
+    } else {
+      groupCard.style.display = '';
+      copyCard.style.display = 'none';
+      groupsEl.innerHTML = '<div class="empty-hint">未识别到内容，请检查输入。</div>';
+      statsEl.textContent = '未识别到内容';
+    }
+  }
+
+  document.getElementById('btnGo').addEventListener('click', run);
+  document.getElementById('btnClear').addEventListener('click', function(){
+    inputEl.value = '';
+    outJm.value = '';
+    outSc.value = '';
+    groupsEl.innerHTML = '';
+    groupCard.style.display = 'none';
+    copyCard.style.display = 'none';
+    statsEl.textContent = '';
+    inputEl.focus();
+  });
+  document.getElementById('copyJm').addEventListener('click', function(){ copyText(outJm.value); });
+  document.getElementById('copySc').addEventListener('click', function(){ copyText(outSc.value); });
+})();
+</script>
+</body>
+</html>

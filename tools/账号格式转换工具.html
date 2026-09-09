@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>账号格式转换工具</title>
+<style>
+  :root{
+    --bg:#F2F0EA;
+    --surface:#FFFFFF;
+    --ink:#22302E;
+    --muted:#6B7674;
+    --line:#DAD6CC;
+    --accent:#0E7A6B;
+    --accent-strong:#0B5E54;
+    --ok:#1E8E5A;
+    --warn:#B4552D;
+    --mono:ui-monospace,"Cascadia Mono","SF Mono",Consolas,"Liberation Mono",Menlo,"Courier New",monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{
+    max-width:780px;
+    margin:0 auto;
+    padding:48px 20px 64px;
+  }
+  header{
+    margin-bottom:28px;
+  }
+  .badge{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:12px;
+    letter-spacing:.04em;
+    color:var(--accent-strong);
+    background:#E3EFEC;
+    border:1px solid #CDE2DD;
+    border-radius:999px;
+    padding:4px 12px;
+    margin-bottom:16px;
+  }
+  .badge svg{width:12px;height:12px;flex:none;}
+  h1{
+    font-size:30px;
+    line-height:1.2;
+    margin:0 0 8px;
+    letter-spacing:-.01em;
+    font-weight:700;
+  }
+  .sub{
+    margin:0;
+    color:var(--muted);
+    font-size:14px;
+    max-width:58ch;
+  }
+  .card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:20px;
+    margin-bottom:16px;
+    box-shadow:0 1px 2px rgba(34,48,46,.04);
+  }
+  .field-label{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    font-size:13px;
+    font-weight:600;
+    color:var(--muted);
+    margin-bottom:8px;
+    letter-spacing:.02em;
+  }
+  .field-label .hint{font-weight:400;font-size:12px;color:#98A09E;}
+  textarea#input{
+    width:100%;
+    min-height:168px;
+    resize:vertical;
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:12px 14px;
+    font-family:var(--mono);
+    font-size:14px;
+    line-height:1.7;
+    color:var(--ink);
+    background:#FCFBF8;
+    outline:none;
+    transition:border-color .15s, box-shadow .15s;
+  }
+  textarea#input:focus{
+    border-color:var(--accent);
+    box-shadow:0 0 0 3px rgba(14,122,107,.14);
+    background:#FFFFFF;
+  }
+  .toolbar{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    flex-wrap:wrap;
+    margin-top:12px;
+  }
+  .toolbar .check{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    font-size:13px;
+    cursor:pointer;
+    user-select:none;
+  }
+  .toolbar input[type="checkbox"]{
+    width:15px;height:15px;
+    accent-color:var(--accent);
+    cursor:pointer;
+  }
+  .toolbar .len{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:13px;
+    color:var(--muted);
+  }
+  .toolbar .len input{
+    width:56px;
+    border:1px solid var(--line);
+    border-radius:7px;
+    padding:5px 8px;
+    font-family:var(--mono);
+    font-size:13px;
+    text-align:center;
+    color:var(--ink);
+    outline:none;
+    background:#FCFBF8;
+  }
+  .toolbar .len input:focus{border-color:var(--accent);}
+  .spacer{flex:1;}
+  button{
+    font-family:var(--sans);
+    font-size:13px;
+    font-weight:600;
+    border-radius:9px;
+    cursor:pointer;
+    border:1px solid transparent;
+    padding:8px 16px;
+    transition:background .15s, border-color .15s, color .15s, transform .05s;
+  }
+  button:active{transform:translateY(1px);}
+  button.ghost{
+    background:#FFFFFF;
+    border-color:var(--line);
+    color:var(--ink);
+  }
+  button.ghost:hover{border-color:var(--accent);color:var(--accent-strong);}
+  button.primary{
+    background:var(--accent);
+    color:#FFFFFF;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+  }
+  button.primary:hover{background:var(--accent-strong);}
+  button.primary svg{width:15px;height:15px;}
+  #file{display:none;}
+  .result-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:8px;
+  }
+  .count{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--accent-strong);
+    background:#E3EFEC;
+    border-radius:999px;
+    padding:2px 10px;
+  }
+  .count.empty{color:var(--muted);background:#EFEDE6;}
+  #result{
+    min-height:96px;
+    max-height:240px;
+    overflow:auto;
+    border:1px solid var(--line);
+    border-left:4px solid var(--accent);
+    border-radius:10px;
+    padding:14px;
+    font-family:var(--mono);
+    font-size:14px;
+    line-height:1.8;
+    background:#FCFBF8;
+    color:var(--ink);
+    word-break:break-all;
+    white-space:normal;
+    user-select:all;
+    -webkit-user-select:all;
+  }
+  #result.placeholder{color:#98A09E;font-family:var(--sans);font-size:13px;user-select:none;-webkit-user-select:none;}
+  #result.clickable{cursor:pointer;}
+  #result.clickable:hover{border-left-color:var(--accent-strong);background:#FFFFFF;}
+  .actions{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-top:12px;
+  }
+  .tip{
+    font-size:12px;
+    color:var(--ok);
+    opacity:0;
+    transition:opacity .2s;
+  }
+  .tip.show{opacity:1;}
+  .tip.warn{color:var(--warn);}
+  .sample{
+    margin-top:14px;
+    padding-top:14px;
+    border-top:1px dashed var(--line);
+    font-size:12px;
+    color:var(--muted);
+  }
+  .sample code{
+    font-family:var(--mono);
+    background:#EFEDE6;
+    border-radius:5px;
+    padding:1px 6px;
+    font-size:12px;
+  }
+  footer{
+    margin-top:28px;
+    text-align:center;
+    font-size:12px;
+    color:#98A09E;
+  }
+  @media (max-width:640px){
+    .wrap{padding:28px 14px 48px;}
+    h1{font-size:24px;}
+    .toolbar{gap:10px;}
+    .toolbar .spacer{flex:none;width:100%;}
+    .actions{flex-wrap:wrap;}
+  }
+</style>
+
+<script src="_skin.js" data-tool="账号格式转换工具" data-kind="plain"></script>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 6l5 5-5 5M7 6l-5 5 5 5"/></svg>
+      本地工具 · 双击即用 · 无需安装 Python
+    </div>
+    <h1>账号格式转换</h1>
+    <p class="sub">粘贴任意格式的账号，自动整理成英文逗号分隔的一行，结果实时生成、一键复制。</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <div class="field-label">
+        <span>原始账号</span>
+        <span class="hint">空格 / 换行 / 逗号 / 制表符混排均可</span>
+      </div>
+      <textarea id="input" spellcheck="false" placeholder="例如：&#10;113724426 113724427 113724428&#10;113724429,113724430&#10;113724431&#9;113724432"></textarea>
+      <div class="toolbar">
+        <label class="check"><input type="checkbox" id="dedup"> 去重</label>
+        <label class="len">仅保留 <input type="number" id="len" min="0" step="1" placeholder="不限"> 位</label>
+        <div class="spacer"></div>
+        <button type="button" class="ghost" id="importBtn">导入文件</button>
+        <button type="button" class="ghost" id="clearBtn">清空</button>
+        <input type="file" id="file" accept=".txt,.csv,.log,.md,text/plain">
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="result-head">
+        <span class="field-label" style="margin:0">转换结果</span>
+        <span class="count empty" id="count">0 个账号</span>
+      </div>
+      <div id="result" class="placeholder">输入账号后，这里会实时显示英文逗号分隔的结果，点击即可复制。</div>
+      <div class="actions">
+        <button type="button" class="primary" id="copyBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          复制结果
+        </button>
+        <span class="tip" id="tip"></span>
+      </div>
+      <div class="sample">
+        示例输入 <code>113724426 113724427,113724428</code> → 输出
+        <code>113724426,113724427,113724428</code>　快捷键 Ctrl+Enter 直接复制
+      </div>
+    </section>
+  </main>
+
+  <footer>转换逻辑完全在本地运行，账号数据不会上传到任何服务器。</footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var inputEl = document.getElementById("input");
+  var dedupEl = document.getElementById("dedup");
+  var lenEl = document.getElementById("len");
+  var resultEl = document.getElementById("result");
+  var countEl = document.getElementById("count");
+  var copyBtn = document.getElementById("copyBtn");
+  var tipEl = document.getElementById("tip");
+  var fileEl = document.getElementById("file");
+  var importBtn = document.getElementById("importBtn");
+  var clearBtn = document.getElementById("clearBtn");
+
+  var tipTimer = null;
+  function tip(msg, warn) {
+    tipEl.textContent = msg;
+    tipEl.className = "tip show" + (warn ? " warn" : "");
+    if (tipTimer) clearTimeout(tipTimer);
+    tipTimer = setTimeout(function () { tipEl.className = "tip"; }, 1800);
+  }
+
+  function extract(text) {
+    var m = text.match(/\d+/g);
+    return m ? m : [];
+  }
+
+  function convert() {
+    var raw = inputEl.value;
+    var nums = extract(raw);
+    var len = parseInt(lenEl.value, 10);
+    if (len > 0) nums = nums.filter(function (n) { return n.length === len; });
+    if (dedupEl.checked) nums = nums.filter(function (n, i) { return nums.indexOf(n) === i; });
+    var out = nums.join(",");
+    if (nums.length === 0) {
+      resultEl.textContent = "未识别到账号（没有数字）。请检查输入内容。";
+      resultEl.className = "placeholder";
+      countEl.textContent = "0 个账号";
+      countEl.className = "count empty";
+    } else {
+      resultEl.textContent = out;
+      resultEl.className = "clickable";
+      countEl.textContent = nums.length + " 个账号" + (len > 0 ? "（仅" + len + "位）" : "");
+      countEl.className = "count";
+    }
+    try {
+      localStorage.setItem("acc-input", raw);
+      localStorage.setItem("acc-opt", JSON.stringify({ dedup: dedupEl.checked, len: lenEl.value }));
+    } catch (e) { /* 无痕模式等场景下忽略 */ }
+  }
+
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text).then(function () { return true; }, function () { return legacyCopy(text); });
+    }
+    return Promise.resolve(legacyCopy(text));
+  }
+  function legacyCopy(text) {
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "fixed";
+    ta.style.top = "-9999px";
+    document.body.appendChild(ta);
+    ta.select();
+    var ok = false;
+    try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  function doCopy() {
+    var out = resultEl.textContent;
+    if (resultEl.classList.contains("placeholder") || !out || out.indexOf(",") === -1 && out.trim().length === 0) {
+      tip("还没有可复制的内容", true);
+      return;
+    }
+    copyText(out).then(function (ok) {
+      tip(ok ? "已复制到剪贴板" : "复制失败，请手动全选结果复制", !ok);
+    });
+  }
+
+  // 实时转换
+  inputEl.addEventListener("input", convert);
+  dedupEl.addEventListener("change", convert);
+  lenEl.addEventListener("input", convert);
+
+  copyBtn.addEventListener("click", doCopy);
+  resultEl.addEventListener("click", function () {
+    if (!resultEl.classList.contains("placeholder")) doCopy();
+  });
+
+  clearBtn.addEventListener("click", function () {
+    inputEl.value = "";
+    convert();
+    inputEl.focus();
+    tip("已清空");
+  });
+
+  importBtn.addEventListener("click", function () { fileEl.click(); });
+  fileEl.addEventListener("change", function () {
+    var f = fileEl.files && fileEl.files[0];
+    if (!f) return;
+    var reader = new FileReader();
+    reader.onload = function () {
+      inputEl.value = String(reader.result || "");
+      convert();
+      tip("已导入：" + f.name);
+    };
+    reader.onerror = function () { tip("读取文件失败", true); };
+    reader.readAsText(f, "utf-8");
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
+      e.preventDefault();
+      doCopy();
+    }
+  });
+
+  // 恢复上次内容
+  try {
+    var savedInput = localStorage.getItem("acc-input");
+    var savedOpt = JSON.parse(localStorage.getItem("acc-opt") || "{}");
+    if (savedInput) inputEl.value = savedInput;
+    if (savedOpt.dedup) dedupEl.checked = true;
+    if (savedOpt.len) lenEl.value = savedOpt.len;
+  } catch (e) { /* 忽略 */ }
+  convert();
+})();
+</script>
+</body>
+</html>

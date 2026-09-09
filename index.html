@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>短剧工作台 · 网页工具集合</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+    background: linear-gradient(135deg, #f7f9ff 0%, #eef3ff 42%, #fdf4ff 78%, #f0f7ff 100%);
+    background-attachment: fixed;
+    color: #2b2b2b;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+  }
+  /* 缓慢流动的光斑 */
+  body::before, body::after {
+    content: '';
+    position: fixed;
+    z-index: 0;
+    width: 46vmax; height: 46vmax;
+    border-radius: 50%;
+    filter: blur(70px);
+    opacity: .32;
+    pointer-events: none;
+  }
+  body::before {
+    top: -14vmax; left: -10vmax;
+    background: radial-gradient(circle, #7ab8ff 0%, rgba(122,184,255,0) 70%);
+    animation: drift1 22s ease-in-out infinite alternate;
+  }
+  body::after {
+    bottom: -16vmax; right: -12vmax;
+    background: radial-gradient(circle, #c9a7ff 0%, rgba(201,167,255,0) 70%);
+    animation: drift2 26s ease-in-out infinite alternate;
+  }
+  @keyframes drift1 { from { transform: translate(0,0) scale(1); } to { transform: translate(6vmax, 4vmax) scale(1.15); } }
+  @keyframes drift2 { from { transform: translate(0,0) scale(1.1); } to { transform: translate(-5vmax, -3vmax) scale(0.95); } }
+
+  header {
+    position: relative; z-index: 2;
+    flex: none;
+    background: rgba(255,255,255,.72);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(227,232,238,.9);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  header .brand h1 {
+    font-size: 20px;
+    background: linear-gradient(90deg, #1565c0, #7c4dff);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: .5px;
+  }
+  header .brand .sub { color: #888; font-size: 12.5px; margin-top: 2px; }
+  header .mode {
+    flex: none;
+    font-size: 11.5px;
+    padding: 3px 10px;
+    border-radius: 99px;
+    font-weight: bold;
+  }
+  header .mode.local { background: #e3f2fd; color: #1565c0; }
+  header .mode.online { background: #e8f5e9; color: #2e7d32; }
+  header .search { margin-left: auto; position: relative; min-width: 220px; flex: 1 1 260px; max-width: 380px; }
+  header .search input {
+    width: 100%;
+    padding: 8px 14px 8px 34px;
+    border: 1px solid #d5dbe3;
+    border-radius: 10px;
+    font-size: 13.5px;
+    background: rgba(250,251,252,.9);
+    color: #2b2b2b;
+    transition: border-color .2s, box-shadow .2s, background .2s;
+  }
+  header .search input:focus { outline: none; border-color: #1976d2; background: #fff; box-shadow: 0 0 0 3px rgba(25,118,210,.14); }
+  header .search svg {
+    position: absolute; left: 11px; top: 50%; transform: translateY(-50%);
+    width: 15px; height: 15px; color: #999; pointer-events: none;
+  }
+  /* 更新入口 */
+  .upd-btn {
+    flex: none;
+    position: relative;
+    width: 38px; height: 38px;
+    border-radius: 12px;
+    border: 1px solid rgba(25,118,210,.25);
+    background: rgba(255,255,255,.85);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: #1565c0;
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+  .upd-btn:hover { transform: translateY(-2px) scale(1.05); box-shadow: 0 6px 18px rgba(21,101,192,.18); border-color: #1976d2; }
+  .upd-btn svg { width: 19px; height: 19px; }
+  .upd-btn .dot {
+    position: absolute; top: -3px; right: -3px;
+    width: 11px; height: 11px;
+    border-radius: 50%;
+    background: #ff3b5c;
+    border: 2px solid #fff;
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,59,92,.5); }
+    50% { transform: scale(1.18); box-shadow: 0 0 0 6px rgba(255,59,92,0); }
+  }
+
+  main { position: relative; z-index: 1; flex: 1; display: flex; min-height: 0; }
+  aside {
+    width: 280px; flex: none;
+    background: rgba(255,255,255,.82);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-right: 1px solid rgba(227,232,238,.9);
+    overflow-y: auto;
+    padding: 12px 12px 20px;
+  }
+  .group-title {
+    font-size: 12px; font-weight: bold; letter-spacing: 2px;
+    color: #999;
+    margin: 14px 8px 6px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .group-title:first-child { margin-top: 2px; }
+  .group-title .n {
+    font-size: 10.5px; letter-spacing: 0;
+    background: #eceff1; color: #78909c;
+    border-radius: 99px; padding: 0 6px; line-height: 1.6;
+  }
+  .tool-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    user-select: none;
+    transition: transform .16s ease, background .16s ease, box-shadow .16s ease;
+    position: relative;
+  }
+  .tool-item:hover {
+    background: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(30,60,120,.09);
+  }
+  .tool-item.active { background: #eef5ff; }
+  .tool-item.active::before {
+    content: ''; position: absolute; left: -12px; top: 7px; bottom: 7px;
+    width: 3px; border-radius: 3px;
+    background: linear-gradient(180deg, #1976d2, #7c4dff);
+  }
+  .tool-item .ico {
+    width: 30px; height: 30px; flex: none;
+    border-radius: 8px;
+    background: #f5f7fa;
+    border: 1px solid #e3e8ee;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+    transition: transform .2s ease;
+  }
+  .tool-item:hover .ico { transform: scale(1.14) rotate(-6deg); }
+  .tool-item.active .ico { background: #fff; border-color: #b3d4f2; }
+  .tool-item .meta { min-width: 0; flex: 1; }
+  .tool-item .name { font-size: 13.5px; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tool-item .desc { font-size: 11.5px; color: #999; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 1px; }
+  .tool-item .open {
+    flex: none;
+    width: 24px; height: 24px;
+    border-radius: 6px;
+    border: 1px solid #e3e8ee;
+    background: #fff;
+    color: #999;
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity .12s ease, color .12s ease, border-color .12s ease;
+  }
+  .tool-item:hover .open { opacity: 1; }
+  .tool-item .open:hover { color: #1976d2; border-color: #1976d2; }
+  .tool-item .open svg { width: 11px; height: 11px; }
+  aside .aside-foot {
+    margin-top: 16px;
+    padding: 10px 12px;
+    font-size: 11.5px;
+    color: #999;
+    background: rgba(250,251,252,.8);
+    border: 1px dashed #d5dbe3;
+    border-radius: 10px;
+    line-height: 1.7;
+  }
+  .stage { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+  .stage-bar {
+    flex: none;
+    display: flex; align-items: center; gap: 12px;
+    padding: 7px 16px;
+    background: rgba(255,255,255,.72);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(227,232,238,.9);
+    font-size: 12.5px; color: #999;
+  }
+  .stage-bar .cur { font-weight: bold; color: #2b2b2b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .stage-bar .hint { margin-left: auto; white-space: nowrap; }
+  iframe { flex: 1; width: 100%; border: none; background: #fff; }
+
+  /* 更新弹窗 */
+  .mask {
+    position: fixed; inset: 0; z-index: 50;
+    background: rgba(15,23,42,.42);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    display: none;
+    align-items: center; justify-content: center;
+    padding: 24px;
+  }
+  .mask.open { display: flex; }
+  .modal {
+    width: min(680px, 100%);
+    max-height: min(82vh, 760px);
+    display: flex; flex-direction: column;
+    background: rgba(255,255,255,.94);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,.6);
+    border-radius: 18px;
+    box-shadow: 0 24px 70px rgba(15,40,90,.28);
+    overflow: hidden;
+    animation: pop .26s cubic-bezier(.2,1.4,.4,1);
+  }
+  @keyframes pop { from { transform: translateY(18px) scale(.97); opacity: 0; } to { transform: none; opacity: 1; } }
+  .modal-head {
+    flex: none;
+    display: flex; align-items: center; gap: 10px;
+    padding: 16px 20px 12px;
+    border-bottom: 1px solid #eef1f6;
+  }
+  .modal-head .t {
+    font-size: 16px; font-weight: bold;
+    background: linear-gradient(90deg, #1565c0, #7c4dff);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .modal-head .ver { font-size: 11.5px; color: #fff; background: #1976d2; border-radius: 99px; padding: 2px 9px; }
+  .modal-head .close {
+    margin-left: auto;
+    width: 30px; height: 30px; border: none; border-radius: 9px;
+    background: #f2f4f8; color: #667; font-size: 15px; cursor: pointer;
+    transition: background .15s, transform .15s;
+  }
+  .modal-head .close:hover { background: #ffe3e8; color: #d32f2f; transform: rotate(90deg); }
+  .modal-body { flex: 1; overflow-y: auto; padding: 14px 20px 20px; }
+  .upd-group { margin-bottom: 20px; }
+  .upd-group:last-child { margin-bottom: 4px; }
+  .upd-date {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: bold; color: #2b2b2b;
+  }
+  .upd-date .tag {
+    font-size: 11px; font-weight: normal;
+    background: #eef5ff; color: #1565c0;
+    border-radius: 6px; padding: 1px 8px;
+  }
+  .upd-date .line { flex: 1; height: 1px; background: linear-gradient(90deg, #dde6f5, transparent); }
+  .upd-items { margin-top: 8px; display: flex; flex-direction: column; gap: 7px; }
+  .upd-item {
+    display: flex; gap: 10px; align-items: baseline;
+    background: #fafbfe;
+    border: 1px solid #edf0f6;
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-size: 12.5px; line-height: 1.65;
+    transition: border-color .15s, transform .15s, box-shadow .15s;
+  }
+  .upd-item:hover { border-color: #c9d8f0; transform: translateX(2px); box-shadow: 0 3px 10px rgba(30,60,120,.07); }
+  .upd-item .scope {
+    flex: none;
+    font-size: 11px; font-weight: bold;
+    background: #e8f0fb; color: #1a5fb4;
+    border-radius: 6px; padding: 1px 8px;
+    white-space: nowrap;
+  }
+  .upd-item .scope.all { background: #ede9fe; color: #6d28d9; }
+  .upd-item .scope.pack { background: #ecfdf5; color: #047857; }
+  .upd-item .txt { color: #3a3f4b; }
+  .modal-foot {
+    flex: none;
+    padding: 10px 20px;
+    border-top: 1px solid #eef1f6;
+    font-size: 11.5px; color: #99a;
+  }
+
+  @media (max-width: 900px) {
+    main { flex-direction: column; }
+    aside {
+      width: 100%; flex: none;
+      border-right: none;
+      border-bottom: 1px solid rgba(227,232,238,.9);
+      max-height: 38vh;
+    }
+    .tool-item .open { opacity: 1; }
+    .stage-bar .hint { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    body::before, body::after, .upd-btn .dot, .modal { animation: none; }
+    .tool-item, .tool-item .ico { transition: none; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <h1>短剧工作台</h1>
+    <div class="sub" id="subLine">本地网页工具集合 · 双击本文件即可使用</div>
+  </div>
+  <span class="mode" id="modeTag"></span>
+  <div class="search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+    <input id="search" type="text" autocomplete="off" spellcheck="false" placeholder="搜索工具…">
+  </div>
+  <button class="upd-btn" id="updBtn" title="查看更新日志" aria-label="查看更新日志">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    <span class="dot" id="updDot"></span>
+  </button>
+</header>
+<main>
+  <aside id="sidebar" aria-label="工具列表"></aside>
+  <section class="stage">
+    <div class="stage-bar">
+      <span>当前工具</span>
+      <span class="cur" id="curName">—</span>
+      <span class="hint">书签安装 / 拖拽类操作建议点右侧「⧉ 新开」</span>
+    </div>
+    <iframe id="frame" title="工具"></iframe>
+  </section>
+</main>
+
+<div class="mask" id="mask">
+  <div class="modal" role="dialog" aria-label="更新日志">
+    <div class="modal-head">
+      <span class="t">更新日志</span>
+      <span class="ver" id="updVer"></span>
+      <button class="close" id="updClose" aria-label="关闭">✕</button>
+    </div>
+    <div class="modal-body" id="updBody"></div>
+    <div class="modal-foot">每次更新都会记录在这里，单工具更新也会单独标注。</div>
+  </div>
+</div>
+
+<script src="updates.js"></script>
+<script>
+(function(){
+  'use strict';
+  // file: 协议 = 本地打开（显示全部，含本地专用工具）；http(s) = 线上公开版（只显示公开工具）
+  var isLocal = (location.protocol === 'file:');
+
+  var PUBLIC = [
+    {
+      group: '素材整理',
+      items: [
+        { name: '素材剧名配对台', ico: '🔀', desc: '两行配对 / 单行同名，分出剧名与素材名清单', src: 'tools/素材剧名配对台.html' },
+        { name: '空行分隔工具', ico: '↕️', desc: '多行文本变成每行之间空一行', src: 'tools/空行分隔工具.html' },
+        { name: '短剧片名拆条台', ico: '🧹', desc: '批量清洗剧名：去 _ / - 后缀、自定义前缀', src: 'tools/短剧片名拆条台.html' },
+        { name: '剧名素材拆分小工具', ico: '✂️', desc: '含「衍生 / - / _」判素材，其余判剧名', src: 'tools/剧名素材拆分小工具.html' },
+        { name: '账号格式转换工具', ico: '🔄', desc: '混排账号整理成英文逗号分隔一行', src: 'tools/账号格式转换工具.html' }
+      ]
+    },
+    {
+      group: '查询与自动化',
+      items: [
+        { name: '查剧名', ico: '🗂️', desc: '素材名反查短剧名 · 约9万条本地库秒出', src: 'tools/查剧名.html' },
+        { name: '素材批量搜索判定', ico: '✅', desc: '媒体素材页批量搜索，✓可搜到 / ✗搜不到', src: 'tools/素材批量搜索判定.html' },
+        { name: '素材批量下载助手', ico: '⬇️', desc: '创量素材筛选页批量下载（按行分剧名）', src: 'tools/素材批量下载助手.html' },
+        { name: '视频ID批量选择', ico: '🎬', desc: '添加素材页一键批量选中视频ID', src: 'tools/视频ID批量选择.html' },
+        { name: '绑剧', ico: '🔗', desc: '分销短剧列表批量搜索剧名并绑定投放账户', src: 'tools/绑剧.html' }
+      ]
+    },
+    {
+      group: '书签维护',
+      items: [
+        { name: '书签代码转换工具', ico: '📜', desc: '乱码 ⇄ 代码 双向转换', src: 'tools/书签代码转换工具.html' }
+      ]
+    }
+  ];
+
+  // 本地专用：含账号 / 后端数据，绝不随 GitHub 上传
+  var PRIVATE = [
+    {
+      group: '本地专用（含后端数据，不上传）',
+      items: [
+        { name: '书签管理后台', ico: '🛠️', desc: '登录 + 运行日志 + 用户书签下发', src: 'private/书签管理后台.html' },
+        { name: '时报采集', ico: '📊', desc: '客户复盘页采集数据，写入本地接收服务', src: 'private/时报采集.html' },
+        { name: '时报补录', ico: '📝', desc: '漏采手动补录，提交本地接收服务', src: 'private/时报补录.html' }
+      ]
+    }
+  ];
+
+  var TOOLS = PUBLIC.concat(isLocal ? PRIVATE : []);
+  var subLine = document.getElementById('subLine');
+  var modeTag = document.getElementById('modeTag');
+  if (isLocal) {
+    modeTag.className = 'mode local';
+    modeTag.textContent = '本地完整版';
+    subLine.textContent = '本地完整版 · 含 3 个本地专用工具';
+  } else {
+    modeTag.className = 'mode online';
+    modeTag.textContent = '公开版';
+    subLine.textContent = '短剧工作台 · 网页工具集合';
+  }
+
+  var sidebar = document.getElementById('sidebar');
+  var frame = document.getElementById('frame');
+  var curName = document.getElementById('curName');
+  var searchEl = document.getElementById('search');
+  var allItems = [];
+
+  TOOLS.forEach(function(group){
+    var gt = document.createElement('div');
+    gt.className = 'group-title';
+    gt.textContent = group.group;
+    var n = document.createElement('span');
+    n.className = 'n';
+    n.textContent = group.items.length + ' 个';
+    gt.appendChild(n);
+    sidebar.appendChild(gt);
+    group.items.forEach(function(tool){
+      var item = document.createElement('div');
+      item.className = 'tool-item';
+      item.setAttribute('data-src', tool.src);
+      item.setAttribute('data-name', tool.name);
+      item.setAttribute('data-desc', tool.desc);
+      item.setAttribute('data-group', group.group);
+
+      var ico = document.createElement('span');
+      ico.className = 'ico';
+      ico.textContent = tool.ico;
+
+      var meta = document.createElement('span');
+      meta.className = 'meta';
+      var nm = document.createElement('div');
+      nm.className = 'name';
+      nm.textContent = tool.name;
+      var dc = document.createElement('div');
+      dc.className = 'desc';
+      dc.textContent = tool.desc;
+      meta.appendChild(nm);
+      meta.appendChild(dc);
+
+      var open = document.createElement('a');
+      open.className = 'open';
+      open.href = tool.src;
+      open.target = '_blank';
+      open.rel = 'noopener';
+      open.title = '在新标签页打开 ' + tool.name;
+      open.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>';
+
+      item.appendChild(ico);
+      item.appendChild(meta);
+      item.appendChild(open);
+      sidebar.appendChild(item);
+      allItems.push(item);
+
+      item.addEventListener('click', function(e){
+        if (e.target.closest('.open')) return;
+        activate(item);
+      });
+    });
+  });
+
+  function activate(item){
+    var prev = sidebar.querySelector('.tool-item.active');
+    if (prev) prev.classList.remove('active');
+    item.classList.add('active');
+    frame.src = item.getAttribute('data-src');
+    curName.textContent = item.getAttribute('data-name');
+    try { localStorage.setItem('doubao-toolhub-last', item.getAttribute('data-src')); } catch(e){}
+  }
+
+  var last = null;
+  try { last = localStorage.getItem('doubao-toolhub-last'); } catch(e){}
+  var target = null;
+  for (var i = 0; i < allItems.length; i++){
+    if (last && allItems[i].getAttribute('data-src') === last){ target = allItems[i]; break; }
+  }
+  if (!target) target = allItems[0];
+  activate(target);
+
+  searchEl.addEventListener('input', function(){
+    var q = searchEl.value.trim().toLowerCase();
+    for (var i = 0; i < allItems.length; i++){
+      var it = allItems[i];
+      var hay = (it.getAttribute('data-name') + ' ' + it.getAttribute('data-desc') + ' ' + it.getAttribute('data-group')).toLowerCase();
+      it.style.display = (!q || hay.indexOf(q) !== -1) ? '' : 'none';
+    }
+    var groups = sidebar.querySelectorAll('.group-title');
+    for (var g = 0; g < groups.length; g++){
+      var gEl = groups[g];
+      var any = false;
+      var sib = gEl.nextElementSibling;
+      while (sib && !sib.classList.contains('group-title')){
+        if (sib.classList.contains('tool-item') && sib.style.display !== 'none'){ any = true; break; }
+        sib = sib.nextElementSibling;
+      }
+      gEl.style.display = any ? '' : 'none';
+    }
+  });
+
+  // ===== 更新日志 =====
+  var UPD = window.DOUBAO_UPDATES || { latest: '', list: [] };
+  var mask = document.getElementById('mask');
+  var updBody = document.getElementById('updBody');
+  var updVer = document.getElementById('updVer');
+  var updBtn = document.getElementById('updBtn');
+  var updDot = document.getElementById('updDot');
+
+  if (UPD.latest) updVer.textContent = '最新 ' + UPD.latest;
+  // 已读记忆：看过最新版后小红点消失
+  var readLatest = null;
+  try { readLatest = localStorage.getItem('doubao-toolhub-upd-read'); } catch(e){}
+  if (readLatest === UPD.latest) updDot.style.display = 'none';
+
+  function renderUpdates(){
+    updBody.innerHTML = '';
+    UPD.list.forEach(function(g){
+      var sec = document.createElement('div');
+      sec.className = 'upd-group';
+      var head = document.createElement('div');
+      head.className = 'upd-date';
+      var tag = document.createElement('span');
+      tag.className = 'tag';
+      tag.textContent = g.date;
+      head.appendChild(tag);
+      var tt = document.createElement('span');
+      tt.textContent = g.title;
+      head.appendChild(tt);
+      var line = document.createElement('span');
+      line.className = 'line';
+      head.appendChild(line);
+      sec.appendChild(head);
+
+      var items = document.createElement('div');
+      items.className = 'upd-items';
+      (g.items || []).forEach(function(it){
+        var row = document.createElement('div');
+        row.className = 'upd-item';
+        var sc = document.createElement('span');
+        sc.className = 'scope';
+        var scopeTxt = String(it.scope || '');
+        if (scopeTxt.indexOf('全部') === 0 || scopeTxt === '工作台') sc.classList.add('all');
+        if (scopeTxt === '打包' || scopeTxt === 'README') sc.classList.add('pack');
+        sc.textContent = scopeTxt;
+        var tx = document.createElement('span');
+        tx.className = 'txt';
+        tx.textContent = it.text;
+        row.appendChild(sc);
+        row.appendChild(tx);
+        items.appendChild(row);
+      });
+      sec.appendChild(items);
+      updBody.appendChild(sec);
+    });
+  }
+
+  function openUpdates(){
+    renderUpdates();
+    mask.classList.add('open');
+    try { localStorage.setItem('doubao-toolhub-upd-read', UPD.latest || ''); } catch(e){}
+    updDot.style.display = 'none';
+  }
+  function closeUpdates(){ mask.classList.remove('open'); }
+
+  updBtn.addEventListener('click', openUpdates);
+  updClose.addEventListener('click', closeUpdates);
+  mask.addEventListener('click', function(e){ if (e.target === mask) closeUpdates(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeUpdates(); });
+})();
+</script>
+</body>
+</html>

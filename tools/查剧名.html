@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>短剧素材名 → 短剧名 查询</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Microsoft YaHei", sans-serif; background: #f0f2f5; color: #222; padding: 16px; }
+  .wrap { max-width: 960px; margin: 0 auto; }
+  h1 { font-size: 18px; margin-bottom: 4px; }
+  .sub { color: #888; font-size: 12px; margin-bottom: 12px; }
+  textarea { width: 100%; height: 140px; padding: 10px; border: 1px solid #ccc; border-radius: 6px;
+             font-family: Consolas, monospace; font-size: 13px; resize: vertical; }
+  .bar { margin: 10px 0; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  button { padding: 7px 16px; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; }
+  .primary { background: #2d8cf0; color: #fff; font-weight: bold; }
+  .primary:hover { background: #1b6fd0; }
+  .ghost { background: #e8e8e8; color: #333; }
+  .ghost:hover { background: #d8d8d8; }
+  .tip { color: #999; font-size: 12px; }
+  #out { background: #fff; border: 1px solid #ddd; border-radius: 6px; padding: 10px;
+         height: 460px; overflow-y: auto; font-size: 13px; line-height: 1.9; }
+  .row { display: flex; align-items: baseline; gap: 8px; padding: 2px 4px; border-bottom: 1px dashed #eee; }
+  .row:hover { background: #f7f9ff; }
+  .idx { color: #aaa; width: 28px; flex-shrink: 0; }
+  .kw  { color: #b8860b; width: 30%; flex-shrink: 0; word-break: break-all; }
+  .arrow { color: #bbb; }
+  .drama { color: #1146a0; font-weight: bold; flex: 1; word-break: break-all; }
+  .nf   { color: #d0021b; flex: 1; }
+  .dl   { color: #999; flex: 1; font-style: italic; }
+  .tagbtn { flex-shrink: 0; font-size: 11px; padding: 2px 8px; border-radius: 4px;
+            background: #ffe0e0; color: #d0021b; border: 1px solid #ffb3b3; cursor: pointer; }
+  .tagbtn:hover { background: #d0021b; color: #fff; }
+  .cnt { float: right; color: #888; font-size: 12px; }
+  .foot { color: #999; font-size: 12px; margin-top: 8px; }
+</style>
+
+<script src="_skin.js" data-tool="查剧名" data-kind="plain"></script>
+</head>
+<body>
+<div class="wrap">
+  <h1>短剧素材名 → 短剧名 查询 <span class="cnt" id="cnt"></span></h1>
+  <div class="sub">粘贴素材名（每行一个）→ 查询。结果每行一个剧名；查不到显示"搜索不到"。点"下架"标记后，下次自动跳过它、显示下一个。</div>
+  <textarea id="inp" placeholder="把素材名粘到这里，一行一个..."></textarea>
+  <div class="bar">
+    <button class="primary" id="btn">开始查询</button>
+    <button class="ghost" id="clearIn">清空输入</button>
+    <button class="ghost" id="copyOut">复制结果（每行一个）</button>
+    <label class="tip"><input type="checkbox" id="fuzzy" checked> 查不到时模糊匹配</label>
+    <button class="ghost" id="showDelisted">已下架清单</button>
+  </div>
+  <div id="out">结果会显示在这里。</div>
+  <div class="foot">说明：一个素材名若对应多个剧，只显示第一个未下架的；点旁边"下架"按钮标记后，下次自动换下一个。</div>
+</div>
+
+<script src="data.js"></script>
+<script>
+var DELISTED_KEY = 'delisted_dramas_v1';
+function getDelisted(){ try{ return JSON.parse(localStorage.getItem(DELISTED_KEY)||'{}'); }catch(e){ return {}; } }
+function saveDelisted(d){ localStorage.setItem(DELISTED_KEY, JSON.stringify(d)); }
+function delistDrama(name){ var d=getDelisted(); d[name]=1; saveDelisted(d); }
+function undelistDrama(name){ var d=getDelisted(); delete d[name]; saveDelisted(d); }
+
+var total = 0;
+try { total = Object.keys(DB).length; } catch(e){}
+document.getElementById('cnt').textContent = '数据库 ' + total + ' 个素材名';
+
+function norm(s){ return (s||'').trim().replace(/\s+/g,''); }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function getCandidates(kw){
+  var k = norm(kw);
+  if(!k) return [];
+  if(DB[k]) return DB[k].slice();
+  if(document.getElementById('fuzzy').checked){
+    var seen={}, out=[];
+    for(var key in DB){
+      if(key.indexOf(k)>=0){
+        for(var i=0;i<DB[key].length;i++){
+          var dr=DB[key][i];
+          if(!seen[dr]){ seen[dr]=1; out.push(dr); }
+        }
+      }
+    }
+    return out;
+  }
+  return [];
+}
+
+var lastResults = [];   // 纯文本结果，供复制
+var lastRows = [];      // {kw, drama|null, all:[...]}
+
+function doSearch(){
+  var lines = document.getElementById('inp').value.split(/\r?\n/).map(function(s){return s.trim();}).filter(Boolean);
+  var out = document.getElementById('out');
+  out.innerHTML='';
+  lastResults=[]; lastRows=[];
+  if(!lines.length){ out.innerHTML='<span class="nf">请先粘贴素材名（每行一个）。</span>'; return; }
+
+  var dl = getDelisted();
+  lines.forEach(function(kw, idx){
+    var cands = getCandidates(kw);
+    var alive = cands.filter(function(d){ return !dl[d]; });
+    var htmlRow = document.createElement('div');
+    htmlRow.className = 'row';
+
+    var idxEl = document.createElement('span'); idxEl.className='idx'; idxEl.textContent=(idx+1);
+    var kwEl  = document.createElement('span'); kwEl.className='kw'; kwEl.textContent=kw;
+    var arrow = document.createElement('span'); arrow.className='arrow'; arrow.textContent='→';
+    htmlRow.appendChild(idxEl); htmlRow.appendChild(kwEl); htmlRow.appendChild(arrow);
+
+    if(!cands.length){
+      var nf=document.createElement('span'); nf.className='nf'; nf.textContent='搜索不到';
+      htmlRow.appendChild(nf);
+      lastResults.push('搜索不到');
+      lastRows.push({kw:kw, drama:null, all:[]});
+    } else if(!alive.length){
+      var al=document.createElement('span'); al.className='dl'; al.textContent='全部已下架（'+cands.length+'个剧都被标记）';
+      htmlRow.appendChild(al);
+      lastResults.push('全部下架');
+      lastRows.push({kw:kw, drama:null, all:cands, allDelisted:true});
+    } else {
+      var drama = alive[0];
+      var dr=document.createElement('span'); dr.className='drama'; dr.textContent=drama;
+      htmlRow.appendChild(dr);
+      var btn=document.createElement('button'); btn.className='tagbtn'; btn.textContent='下架';
+      btn.onclick = (function(name, rowEl){ return function(){
+        delistDrama(name);
+        btn.textContent='已标记'; btn.disabled=true;
+        btn.style.background='#ccc'; btn.style.color='#666';
+      };})(drama, htmlRow);
+      htmlRow.appendChild(btn);
+      lastResults.push(drama);
+      lastRows.push({kw:kw, drama:drama, all:cands});
+      if(alive.length>1){
+        var more=document.createElement('span'); more.className='tip'; more.textContent='(还有'+(alive.length-1)+'个未下架)';
+        htmlRow.appendChild(more);
+      }
+    }
+    out.appendChild(htmlRow);
+  });
+  out.scrollTop=0;
+}
+
+document.getElementById('btn').onclick = doSearch;
+document.getElementById('clearIn').onclick = function(){ document.getElementById('inp').value=''; };
+document.getElementById('copyOut').onclick = function(){
+  var t = lastResults.join('\n');
+  navigator.clipboard.writeText(t).then(function(){ alert('已复制：\n'+t); });
+};
+document.getElementById('inp').addEventListener('keydown', function(e){
+  if((e.ctrlKey||e.metaKey) && e.key==='Enter'){ e.preventDefault(); doSearch(); }
+});
+document.getElementById('showDelisted').onclick = function(){
+  var d = getDelisted();
+  var names = Object.keys(d);
+  if(!names.length){ alert('还没有下架标记'); return; }
+  var text = '已标记下架的剧（'+names.length+'个）：\n\n' + names.join('\n') +
+             '\n\n点确定清除全部标记。';
+  if(confirm(text)){
+    localStorage.removeItem(DELISTED_KEY);
+    alert('已清空下架标记');
+  }
+};
+</script>
+</body>
+</html>
